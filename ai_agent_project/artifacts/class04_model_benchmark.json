@@ -1,0 +1,359 @@
+{
+  "class": 4,
+  "cloud_model": "gemini-3.1-flash-lite",
+  "local_model": "qwen3.5:4b",
+  "ollama_status": {
+    "command_available": true,
+    "api_available": true,
+    "version": "ollama version is 0.35.0",
+    "models": [
+      "qwen3.5:4b"
+    ],
+    "reason": null
+  },
+  "benchmark": [
+    {
+      "provider": "local",
+      "model": "qwen3.5:4b",
+      "case": "instruction_7_words",
+      "capability": "instruction_following",
+      "repetition": 1,
+      "passed": true,
+      "detail": "7 palabras",
+      "latency_ms": 36.18,
+      "preview": "Agente decide acciones usando herramientas y contexto"
+    },
+    {
+      "provider": "local",
+      "model": "qwen3.5:4b",
+      "case": "instruction_7_words",
+      "capability": "instruction_following",
+      "repetition": 2,
+      "passed": true,
+      "detail": "7 palabras",
+      "latency_ms": 36.11,
+      "preview": "Agente decide acciones usando herramientas y contexto"
+    },
+    {
+      "provider": "local",
+      "model": "qwen3.5:4b",
+      "case": "instruction_7_words",
+      "capability": "instruction_following",
+      "repetition": 3,
+      "passed": true,
+      "detail": "7 palabras",
+      "latency_ms": 36.11,
+      "preview": "Agente decide acciones usando herramientas y contexto"
+    },
+    {
+      "provider": "local",
+      "model": "qwen3.5:4b",
+      "case": "structured_json",
+      "capability": "structured_output",
+      "repetition": 1,
+      "passed": false,
+      "detail": "JSON inválido",
+      "latency_ms": 36.16,
+      "preview": "category=rrhh; confidence=0.93"
+    },
+    {
+      "provider": "local",
+      "model": "qwen3.5:4b",
+      "case": "structured_json",
+      "capability": "structured_output",
+      "repetition": 2,
+      "passed": false,
+      "detail": "JSON inválido",
+      "latency_ms": 36.11,
+      "preview": "category=rrhh; confidence=0.93"
+    },
+    {
+      "provider": "local",
+      "model": "qwen3.5:4b",
+      "case": "structured_json",
+      "capability": "structured_output",
+      "repetition": 3,
+      "passed": false,
+      "detail": "JSON inválido",
+      "latency_ms": 35.23,
+      "preview": "category=rrhh; confidence=0.93"
+    },
+    {
+      "provider": "local",
+      "model": "qwen3.5:4b",
+      "case": "tool_selection_prompted",
+      "capability": "prompted_tool_selection",
+      "repetition": 1,
+      "passed": true,
+      "detail": "tool válida",
+      "latency_ms": 36.14,
+      "preview": "{\"tool\":\"buscar_politica\",\"arguments\":{\"query\":\"vacaciones\"}}"
+    },
+    {
+      "provider": "local",
+      "model": "qwen3.5:4b",
+      "case": "tool_selection_prompted",
+      "capability": "prompted_tool_selection",
+      "repetition": 2,
+      "passed": true,
+      "detail": "tool válida",
+      "latency_ms": 36.15,
+      "preview": "{\"tool\":\"buscar_politica\",\"arguments\":{\"query\":\"vacaciones\"}}"
+    },
+    {
+      "provider": "local",
+      "model": "qwen3.5:4b",
+      "case": "tool_selection_prompted",
+      "capability": "prompted_tool_selection",
+      "repetition": 3,
+      "passed": true,
+      "detail": "tool válida",
+      "latency_ms": 36.29,
+      "preview": "{\"tool\":\"buscar_politica\",\"arguments\":{\"query\":\"vacaciones\"}}"
+    },
+    {
+      "provider": "local",
+      "model": "qwen3.5:4b",
+      "case": "short_summary",
+      "capability": "summarization",
+      "repetition": 1,
+      "passed": true,
+      "detail": "8 palabras",
+      "latency_ms": 36.15,
+      "preview": "Resumen: la política requiere registro, revisión y aprobación."
+    },
+    {
+      "provider": "local",
+      "model": "qwen3.5:4b",
+      "case": "short_summary",
+      "capability": "summarization",
+      "repetition": 2,
+      "passed": true,
+      "detail": "8 palabras",
+      "latency_ms": 36.16,
+      "preview": "Resumen: la política requiere registro, revisión y aprobación."
+    },
+    {
+      "provider": "local",
+      "model": "qwen3.5:4b",
+      "case": "short_summary",
+      "capability": "summarization",
+      "repetition": 3,
+      "passed": true,
+      "detail": "8 palabras",
+      "latency_ms": 36.14,
+      "preview": "Resumen: la política requiere registro, revisión y aprobación."
+    },
+    {
+      "provider": "cloud",
+      "model": "gemini-3.1-flash-lite",
+      "case": "instruction_7_words",
+      "capability": "instruction_following",
+      "repetition": 1,
+      "passed": true,
+      "detail": "7 palabras",
+      "latency_ms": 2451.3,
+      "preview": "Un agente es quien actúa por otros."
+    },
+    {
+      "provider": "cloud",
+      "model": "gemini-3.1-flash-lite",
+      "case": "instruction_7_words",
+      "capability": "instruction_following",
+      "repetition": 2,
+      "passed": true,
+      "detail": "7 palabras",
+      "latency_ms": 2271.31,
+      "preview": "Un agente es quien actúa por otros."
+    },
+    {
+      "provider": "cloud",
+      "model": "gemini-3.1-flash-lite",
+      "case": "instruction_7_words",
+      "capability": "instruction_following",
+      "repetition": 3,
+      "passed": true,
+      "detail": "7 palabras",
+      "latency_ms": 3744.75,
+      "preview": "Un agente es quien actúa por otros."
+    },
+    {
+      "provider": "cloud",
+      "model": "gemini-3.1-flash-lite",
+      "case": "structured_json",
+      "capability": "structured_output",
+      "repetition": 1,
+      "passed": true,
+      "detail": "JSON válido",
+      "latency_ms": 2556.45,
+      "preview": "{\n  \"category\": \"solicitud_vacaciones\",\n  \"confidence\": 0.98\n}"
+    },
+    {
+      "provider": "cloud",
+      "model": "gemini-3.1-flash-lite",
+      "case": "structured_json",
+      "capability": "structured_output",
+      "repetition": 2,
+      "passed": true,
+      "detail": "JSON válido",
+      "latency_ms": 1944.67,
+      "preview": "{\n  \"category\": \"solicitud_vacaciones\",\n  \"confidence\": 0.98\n}"
+    },
+    {
+      "provider": "cloud",
+      "model": "gemini-3.1-flash-lite",
+      "case": "structured_json",
+      "capability": "structured_output",
+      "repetition": 3,
+      "passed": true,
+      "detail": "JSON válido",
+      "latency_ms": 2047.17,
+      "preview": "{\n  \"category\": \"solicitud_vacaciones\",\n  \"confidence\": 0.98\n}"
+    },
+    {
+      "provider": "cloud",
+      "model": "gemini-3.1-flash-lite",
+      "case": "tool_selection_prompted",
+      "capability": "prompted_tool_selection",
+      "repetition": 1,
+      "passed": true,
+      "detail": "tool válida",
+      "latency_ms": 1691.44,
+      "preview": "{\n  \"tool\": \"buscar_politica\",\n  \"arguments\": {\n    \"query\": \"vacaciones\"\n  }\n}"
+    },
+    {
+      "provider": "cloud",
+      "model": "gemini-3.1-flash-lite",
+      "case": "tool_selection_prompted",
+      "capability": "prompted_tool_selection",
+      "repetition": 2,
+      "passed": true,
+      "detail": "tool válida",
+      "latency_ms": 3457.69,
+      "preview": "{\n  \"tool\": \"buscar_politica\",\n  \"arguments\": {\n    \"query\": \"vacaciones\"\n  }\n}"
+    },
+    {
+      "provider": "cloud",
+      "model": "gemini-3.1-flash-lite",
+      "case": "tool_selection_prompted",
+      "capability": "prompted_tool_selection",
+      "repetition": 3,
+      "passed": true,
+      "detail": "tool válida",
+      "latency_ms": 3065.86,
+      "preview": "{\n  \"tool\": \"buscar_politica\",\n  \"arguments\": {\n    \"query\": \"vacaciones\"\n  }\n}"
+    },
+    {
+      "provider": "cloud",
+      "model": "gemini-3.1-flash-lite",
+      "case": "short_summary",
+      "capability": "summarization",
+      "repetition": 1,
+      "passed": false,
+      "detail": "67 palabras",
+      "latency_ms": 3868.53,
+      "preview": "Aquí tienes algunas opciones, dependiendo de lo que busques:\n\n*   **Opción directa:** El l"
+    },
+    {
+      "provider": "cloud",
+      "model": "gemini-3.1-flash-lite",
+      "case": "short_summary",
+      "capability": "summarization",
+      "repetition": 2,
+      "passed": false,
+      "detail": "67 palabras",
+      "latency_ms": 3277.5,
+      "preview": "Aquí tienes algunas opciones, dependiendo de lo que busques:\n\n*   **Opción directa:** El l"
+    },
+    {
+      "provider": "cloud",
+      "model": "gemini-3.1-flash-lite",
+      "case": "short_summary",
+      "capability": "summarization",
+      "repetition": 3,
+      "passed": false,
+      "detail": "67 palabras",
+      "latency_ms": 2262.53,
+      "preview": "Aquí tienes algunas opciones, dependiendo de lo que busques:\n\n*   **Opción directa:** El l"
+    }
+  ],
+  "summary": [
+    {
+      "provider": "local",
+      "model": "qwen3.5:4b",
+      "repetitions_per_case": 3,
+      "pass_rate": 0.75,
+      "avg_latency_ms": 36.08,
+      "latency_spread_ms": 1.06,
+      "prompted_tool_case_passed": true
+    },
+    {
+      "provider": "cloud",
+      "model": "gemini-3.1-flash-lite",
+      "repetitions_per_case": 3,
+      "pass_rate": 0.75,
+      "avg_latency_ms": 2719.93,
+      "latency_spread_ms": 2177.09,
+      "prompted_tool_case_passed": true
+    }
+  ],
+  "native_tool_call": {
+    "provider": "ollama",
+    "model": "qwen3.5:4b",
+    "tool_call_detected": true,
+    "tool_name": "buscar_politica",
+    "arguments": {
+      "query": "vacaciones"
+    },
+    "latency_ms": 6550.71
+  },
+  "routing_examples": [
+    {
+      "caso": "clasificación privada",
+      "provider": "local",
+      "reason": "datos sensibles y capacidad local suficiente",
+      "requires_human_review": false
+    },
+    {
+      "caso": "consulta con tool",
+      "provider": "cloud",
+      "reason": "requiere tools o razonamiento complejo",
+      "requires_human_review": false
+    },
+    {
+      "caso": "resumen simple",
+      "provider": "local",
+      "reason": "tarea simple; prioriza costo y disponibilidad local",
+      "requires_human_review": false
+    }
+  ],
+  "integrated_results": [
+    {
+      "task_id": "T-001",
+      "selected_provider": "local",
+      "routing_reason": "datos sensibles y capacidad local suficiente",
+      "requires_human_review": false,
+      "execution_mode": "generation",
+      "model": "qwen3.5:4b",
+      "latency_ms": 36.13,
+      "response": "Respuesta de ollama-simulado: Clasificá este texto con DNI como consulta de RRHH.",
+      "tool_calls": []
+    },
+    {
+      "task_id": "T-002",
+      "selected_provider": "cloud",
+      "routing_reason": "requiere tools o razonamiento complejo",
+      "requires_human_review": false,
+      "execution_mode": "prompted_tool_fallback",
+      "model": "gemini-3.1-flash-lite",
+      "latency_ms": 3006.61,
+      "response": "{\n  \"tool\": \"buscar_politica\",\n  \"arguments\": {\n    \"query\": \"vacaciones\"\n  }\n}",
+      "tool_calls": []
+    }
+  ],
+  "notes": [
+    "Los resultados simulados validan plumbing y contratos.",
+    "La calidad real debe medirse con providers reales y múltiples ejecuciones.",
+    "El JSON por prompt y tool calling nativo se registran como evidencias distintas."
+  ]
+}

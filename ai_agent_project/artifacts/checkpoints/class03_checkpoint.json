@@ -1,0 +1,11 @@
+{
+  "class": 3,
+  "canonical_model": "gemini-3.1-flash-lite",
+  "increment": "providers, settings, resiliencia, sesiones y trazas",
+  "default_mode": "simulated",
+  "real_mode_controls": [
+    "USE_REAL_GEMINI=1",
+    "RUN_REAL_GEMINI_DEMO=True"
+  ],
+  "next_class": 4
+}

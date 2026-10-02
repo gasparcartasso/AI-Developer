@@ -1,0 +1,2 @@
+Si se expone una credencial, cambiá la contraseña, revocá sesiones activas y abrí
+inmediatamente un incidente de seguridad. Informá sistema, horario y canal de exposición.

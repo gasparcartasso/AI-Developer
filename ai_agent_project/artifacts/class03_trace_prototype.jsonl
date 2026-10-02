@@ -1,0 +1,1 @@
+{"event_id": "24bdf4c9-b15c-4ce8-936e-2399c983f690", "run_id": "run-demo", "session_id": "session-demo", "event": "run.started", "timestamp": "2026-08-04T03:56:11.826168+00:00", "payload": {"provider": "fake", "model": "fake:gemini-3.1-flash-lite"}}

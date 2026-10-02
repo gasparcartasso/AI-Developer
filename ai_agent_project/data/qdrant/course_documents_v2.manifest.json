@@ -1,0 +1,7 @@
+{
+  "index_version": "class05-v1",
+  "embedding_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+  "embedding_dimensions": 384,
+  "normalization": "l2",
+  "distance": "cosine"
+}

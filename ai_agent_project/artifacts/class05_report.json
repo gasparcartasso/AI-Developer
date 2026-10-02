@@ -1,0 +1,195 @@
+{
+  "class": 5,
+  "embedding": {
+    "model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+    "dimension": 384,
+    "normalization": "l2",
+    "mode": "real",
+    "provider_scope": "indexar y consultar con el mismo modelo de embeddings"
+  },
+  "similarity_experiment": [
+    {
+      "par": "vacaciones ↔ licencia",
+      "similaridad": 0.37
+    },
+    {
+      "par": "vacaciones ↔ gastos",
+      "similaridad": 0.248
+    }
+  ],
+  "chunking": {
+    "selected_strategy": "recursive",
+    "target_words": 45,
+    "overlap_words": 6,
+    "strategy_comparison": [
+      {
+        "strategy": "fixed",
+        "chunks": 8,
+        "avg_words": 36.6,
+        "min_words": 21,
+        "max_words": 45
+      },
+      {
+        "strategy": "recursive",
+        "chunks": 8,
+        "avg_words": 35.2,
+        "min_words": 20,
+        "max_words": 44
+      },
+      {
+        "strategy": "semantic",
+        "chunks": 10,
+        "avg_words": 25.8,
+        "min_words": 10,
+        "max_words": 58
+      }
+    ],
+    "overlap_experiment": [
+      {
+        "overlap_words": 0,
+        "chunks": 8,
+        "total_embedded_words": 258
+      },
+      {
+        "overlap_words": 6,
+        "chunks": 8,
+        "total_embedded_words": 282
+      },
+      {
+        "overlap_words": 12,
+        "chunks": 9,
+        "total_embedded_words": 317
+      }
+    ],
+    "mini_evaluation": [
+      {
+        "strategy": "fixed",
+        "top1_hits": 4,
+        "cases": 4,
+        "hit_rate": 1.0,
+        "chunks": 8
+      },
+      {
+        "strategy": "recursive",
+        "top1_hits": 4,
+        "cases": 4,
+        "hit_rate": 1.0,
+        "chunks": 8
+      },
+      {
+        "strategy": "semantic",
+        "top1_hits": 4,
+        "cases": 4,
+        "hit_rate": 1.0,
+        "chunks": 10
+      }
+    ]
+  },
+  "retrieval": {
+    "backend": {
+      "backend": "qdrant-local",
+      "collection": "course_documents_v2",
+      "points": 8,
+      "embedding_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+      "vector_size": 384,
+      "normalization": "l2",
+      "index_version": "class05-v1",
+      "distance": "cosine",
+      "persistent": true
+    },
+    "distance": "cosine",
+    "indexed_chunks": 8,
+    "index_latency_ms": 470.4,
+    "sample_query": {
+      "query": "¿con cuánto tiempo debo pedir mi licencia anual?",
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.402,
+          "document_id": "POL-VAC-001",
+          "source": "politica_vacaciones.md",
+          "topic": "vacaciones",
+          "preview": "Las solicitudes de vacaciones deben registrarse en la herramienta de RRHH con al menos 15 días corridos de anticipación. La carga inicia el circuito d"
+        },
+        {
+          "rank": 2,
+          "score": 0.275,
+          "document_id": "POL-EXP-002",
+          "source": "politica_gastos.md",
+          "topic": "gastos",
+          "preview": "Los reintegros de gastos deben presentarse con comprobante fiscal válido y una descripción del motivo. El plazo máximo es de 30 días corridos desde la"
+        },
+        {
+          "rank": 3,
+          "score": 0.235,
+          "document_id": "POL-VAC-001",
+          "source": "politica_vacaciones.md",
+          "topic": "vacaciones",
+          "preview": "cobertura operativa y las fechas solicitadas. Si existe una urgencia, la persona debe documentar la excepción y solicitar aprobación explícita del líd"
+        }
+      ]
+    },
+    "filtered_results": [
+      {
+        "rank": 1,
+        "score": 0.609,
+        "document_id": "POL-REM-004",
+        "source": "politica_trabajo_remoto.md",
+        "topic": "trabajo remoto",
+        "preview": "y cumplir las medidas de seguridad. El acuerdo puede revisarse cuando cambian las funciones, el equipo o las condiciones operativas."
+      },
+      {
+        "rank": 2,
+        "score": 0.474,
+        "document_id": "POL-REM-004",
+        "source": "politica_trabajo_remoto.md",
+        "topic": "trabajo remoto",
+        "preview": "El trabajo remoto requiere acuerdo previo con el líder y registro en la herramienta interna. Cada equipo define días de presencialidad según sus neces"
+      },
+      {
+        "rank": 3,
+        "score": 0.27,
+        "document_id": "POL-VAC-001",
+        "source": "politica_vacaciones.md",
+        "topic": "vacaciones",
+        "preview": "cobertura operativa y las fechas solicitadas. Si existe una urgencia, la persona debe documentar la excepción y solicitar aprobación explícita del líd"
+      },
+      {
+        "rank": 4,
+        "score": 0.244,
+        "document_id": "POL-VAC-001",
+        "source": "politica_vacaciones.md",
+        "topic": "vacaciones",
+        "preview": "Las solicitudes de vacaciones deben registrarse en la herramienta de RRHH con al menos 15 días corridos de anticipación. La carga inicia el circuito d"
+      }
+    ],
+    "diagnostics": [
+      {
+        "query": "¿qué hago si expuse mi contraseña?",
+        "top_1": "POL-SEC-003",
+        "score_1": 0.444,
+        "top_2": "POL-VAC-001",
+        "score_gap": 0.281
+      },
+      {
+        "query": "¿cuál es el plazo para presentar un reintegro?",
+        "top_1": "POL-EXP-002",
+        "score_1": 0.6,
+        "top_2": "POL-VAC-001",
+        "score_gap": 0.205
+      },
+      {
+        "query": "¿cómo se registra el trabajo remoto?",
+        "top_1": "POL-REM-004",
+        "score_1": 0.731,
+        "top_2": "POL-VAC-001",
+        "score_gap": 0.342
+      }
+    ]
+  },
+  "continuity": {
+    "increment": "embeddings, chunking e interfaz Retriever",
+    "next_class": 6
+  },
+  "documents": 4
+}

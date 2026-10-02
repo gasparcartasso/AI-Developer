@@ -1,0 +1,431 @@
+{
+  "class": 7,
+  "case_study": {
+    "name": "agente de gestión asistida de emails",
+    "stage": "rag_draft",
+    "summary": "Transformar candidatos recuperados en contexto, respuesta, citas y validación antes de producir un draft."
+  },
+  "retrieval_handoff": {
+    "source": "artifacts/class06_report.json",
+    "backend": {
+      "backend": "in-memory-compatible",
+      "points": 10,
+      "embedding_model": "deterministic-semantic-smoke-v3",
+      "vector_size": 192,
+      "persistent": false
+    },
+    "chunks": 10,
+    "retrieval_k_fixed": 5,
+    "inherited_min_score": 0.28
+  },
+  "generation": {
+    "provider": "extractive-offline-fallback",
+    "real_llm_used": false
+  },
+  "context_builder": {
+    "max_context_chars": 1800,
+    "min_score_inherited": 0.28
+  },
+  "rag": {
+    "answer_with_evidence": {
+      "status": "ANSWER",
+      "answer": "Las solicitudes de vacaciones deben registrarse en la herramienta de RRHH con al menos 15 días corridos de anticipación. [SOURCE: politica_vacaciones.md | CHUNK: POL-VAC-001:recursive:000:f05eeb6e] # Preguntas frecuentes de RRHH Para pedir vacaciones, registrá la solicitud con 15 días corridos de anticipación. [SOURCE: faq_rrhh.md | CHUNK: FAQ-RRHH-005:recursive:000:8127fc62]",
+      "accepted": true,
+      "sources": [
+        "politica_vacaciones.md",
+        "faq_rrhh.md"
+      ],
+      "context_sources": [
+        "politica_vacaciones.md",
+        "faq_rrhh.md"
+      ],
+      "citations": [
+        {
+          "source": "politica_vacaciones.md",
+          "chunk_id": "POL-VAC-001:recursive:000:f05eeb6e"
+        },
+        {
+          "source": "faq_rrhh.md",
+          "chunk_id": "FAQ-RRHH-005:recursive:000:8127fc62"
+        }
+      ],
+      "validation": {
+        "valid": true,
+        "citations": [
+          {
+            "source": "politica_vacaciones.md",
+            "chunk_id": "POL-VAC-001:recursive:000:f05eeb6e"
+          },
+          {
+            "source": "faq_rrhh.md",
+            "chunk_id": "FAQ-RRHH-005:recursive:000:8127fc62"
+          }
+        ],
+        "errors": []
+      },
+      "generation_mode": "extractive-offline-fallback",
+      "has_enough_evidence": true,
+      "retrieved_count": 5,
+      "context_count": 2,
+      "context_chars": 712,
+      "used_chunk_ids": [
+        "POL-VAC-001:recursive:000:f05eeb6e",
+        "FAQ-RRHH-005:recursive:000:8127fc62"
+      ],
+      "dropped_chunks": [
+        {
+          "chunk_id": "POL-SEC-003:recursive:001:b6ee93f8",
+          "source": "politica_seguridad.md",
+          "reason": "below_inherited_threshold"
+        },
+        {
+          "chunk_id": "POL-BEN-007:recursive:000:74c98ad3",
+          "source": "beneficio_capacitacion.json",
+          "reason": "below_inherited_threshold"
+        },
+        {
+          "chunk_id": "INC-SEC-006:recursive:000:db0b5e7d",
+          "source": "respuesta_incidentes.txt",
+          "reason": "below_inherited_threshold"
+        }
+      ],
+      "technical_error": null
+    },
+    "status_cases": [
+      {
+        "case": "answer",
+        "status": "ANSWER",
+        "accepted": true,
+        "technical_error": null
+      },
+      {
+        "case": "clarify",
+        "status": "CLARIFY",
+        "accepted": true,
+        "technical_error": null
+      },
+      {
+        "case": "abstain",
+        "status": "ABSTAIN",
+        "accepted": true,
+        "technical_error": null
+      },
+      {
+        "case": "error",
+        "status": "ERROR",
+        "accepted": false,
+        "technical_error": "TimeoutError: backend no respondió"
+      }
+    ],
+    "llm_error": {
+      "status": "ERROR",
+      "answer": "No se pudo completar la generación.",
+      "accepted": false,
+      "sources": [],
+      "context_sources": [
+        "vacaciones.md"
+      ],
+      "citations": [],
+      "validation": {
+        "valid": false,
+        "citations": [],
+        "errors": [
+          "La generación terminó con un error técnico."
+        ]
+      },
+      "generation_mode": "broken-generator",
+      "has_enough_evidence": false,
+      "retrieved_count": 1,
+      "context_count": 1,
+      "context_chars": 95,
+      "used_chunk_ids": [
+        "VAC:0"
+      ],
+      "dropped_chunks": [],
+      "technical_error": "TimeoutError: LLM timeout de prueba"
+    },
+    "context_experiment": [
+      {
+        "config": "compacta",
+        "retrieval_k_fijo": 5,
+        "retrieved": 5,
+        "context_count": 1,
+        "context_chars": 350,
+        "used_chunk_ids": [
+          "POL-VAC-001:recursive:000:f05eeb6e"
+        ],
+        "dropped": [
+          {
+            "chunk_id": "FAQ-RRHH-005:recursive:000:8127fc62",
+            "source": "faq_rrhh.md",
+            "reason": "budget_exceeded"
+          },
+          {
+            "chunk_id": "POL-SEC-003:recursive:001:b6ee93f8",
+            "source": "politica_seguridad.md",
+            "reason": "below_inherited_threshold"
+          },
+          {
+            "chunk_id": "POL-BEN-007:recursive:000:74c98ad3",
+            "source": "beneficio_capacitacion.json",
+            "reason": "below_inherited_threshold"
+          },
+          {
+            "chunk_id": "INC-SEC-006:recursive:000:db0b5e7d",
+            "source": "respuesta_incidentes.txt",
+            "reason": "below_inherited_threshold"
+          }
+        ],
+        "status": "ANSWER",
+        "validation_ok": true,
+        "sources": [
+          "politica_vacaciones.md"
+        ]
+      },
+      {
+        "config": "balanceada",
+        "retrieval_k_fijo": 5,
+        "retrieved": 5,
+        "context_count": 2,
+        "context_chars": 712,
+        "used_chunk_ids": [
+          "POL-VAC-001:recursive:000:f05eeb6e",
+          "FAQ-RRHH-005:recursive:000:8127fc62"
+        ],
+        "dropped": [
+          {
+            "chunk_id": "POL-SEC-003:recursive:001:b6ee93f8",
+            "source": "politica_seguridad.md",
+            "reason": "below_inherited_threshold"
+          },
+          {
+            "chunk_id": "POL-BEN-007:recursive:000:74c98ad3",
+            "source": "beneficio_capacitacion.json",
+            "reason": "below_inherited_threshold"
+          },
+          {
+            "chunk_id": "INC-SEC-006:recursive:000:db0b5e7d",
+            "source": "respuesta_incidentes.txt",
+            "reason": "below_inherited_threshold"
+          }
+        ],
+        "status": "ANSWER",
+        "validation_ok": true,
+        "sources": [
+          "politica_vacaciones.md",
+          "faq_rrhh.md"
+        ]
+      },
+      {
+        "config": "amplia",
+        "retrieval_k_fijo": 5,
+        "retrieved": 5,
+        "context_count": 2,
+        "context_chars": 712,
+        "used_chunk_ids": [
+          "POL-VAC-001:recursive:000:f05eeb6e",
+          "FAQ-RRHH-005:recursive:000:8127fc62"
+        ],
+        "dropped": [
+          {
+            "chunk_id": "POL-SEC-003:recursive:001:b6ee93f8",
+            "source": "politica_seguridad.md",
+            "reason": "below_inherited_threshold"
+          },
+          {
+            "chunk_id": "POL-BEN-007:recursive:000:74c98ad3",
+            "source": "beneficio_capacitacion.json",
+            "reason": "below_inherited_threshold"
+          },
+          {
+            "chunk_id": "INC-SEC-006:recursive:000:db0b5e7d",
+            "source": "respuesta_incidentes.txt",
+            "reason": "below_inherited_threshold"
+          }
+        ],
+        "status": "ANSWER",
+        "validation_ok": true,
+        "sources": [
+          "politica_vacaciones.md",
+          "faq_rrhh.md"
+        ]
+      }
+    ],
+    "citation_audit": {
+      "citation_valid": true,
+      "claim_supported": false,
+      "observation": "La fuente existe, pero no sostiene la afirmación."
+    },
+    "untrusted_content_test": {
+      "status": "ANSWER",
+      "answer": "Las vacaciones se solicitan con 15 días de anticipación. [SOURCE: vacaciones.md | CHUNK: VAC:0]",
+      "accepted": true,
+      "sources": [
+        "vacaciones.md"
+      ],
+      "context_sources": [
+        "vacaciones.md"
+      ],
+      "citations": [
+        {
+          "source": "vacaciones.md",
+          "chunk_id": "VAC:0"
+        }
+      ],
+      "validation": {
+        "valid": true,
+        "citations": [
+          {
+            "source": "vacaciones.md",
+            "chunk_id": "VAC:0"
+          }
+        ],
+        "errors": []
+      },
+      "generation_mode": "extractive-offline-fallback",
+      "has_enough_evidence": true,
+      "retrieved_count": 2,
+      "context_count": 1,
+      "context_chars": 95,
+      "used_chunk_ids": [
+        "VAC:0"
+      ],
+      "dropped_chunks": [
+        {
+          "chunk_id": "MAL:0",
+          "source": "externo_malicioso.md",
+          "reason": "instruction_injection"
+        }
+      ],
+      "technical_error": null
+    }
+  },
+  "langchain_bridge": {
+    "status": "executed",
+    "question": "¿Con cuánta anticipación se piden vacaciones?",
+    "same_retriever": true,
+    "same_context_builder": true,
+    "same_generator": true,
+    "same_validator": true,
+    "manual": {
+      "status": "ANSWER",
+      "answer": "Las solicitudes de vacaciones deben registrarse en la herramienta de RRHH con al menos 15 días corridos de anticipación. [SOURCE: politica_vacaciones.md | CHUNK: POL-VAC-001:recursive:000:f05eeb6e] # Preguntas frecuentes de RRHH Para pedir vacaciones, registrá la solicitud con 15 días corridos de anticipación. [SOURCE: faq_rrhh.md | CHUNK: FAQ-RRHH-005:recursive:000:8127fc62]",
+      "sources": [
+        "politica_vacaciones.md",
+        "faq_rrhh.md"
+      ],
+      "used_chunk_ids": [
+        "POL-VAC-001:recursive:000:f05eeb6e",
+        "FAQ-RRHH-005:recursive:000:8127fc62"
+      ]
+    },
+    "langchain": {
+      "status": "ANSWER",
+      "answer": "Las solicitudes de vacaciones deben registrarse en la herramienta de RRHH con al menos 15 días corridos de anticipación. [SOURCE: politica_vacaciones.md | CHUNK: POL-VAC-001:recursive:000:f05eeb6e] # Preguntas frecuentes de RRHH Para pedir vacaciones, registrá la solicitud con 15 días corridos de anticipación. [SOURCE: faq_rrhh.md | CHUNK: FAQ-RRHH-005:recursive:000:8127fc62]",
+      "sources": [
+        "politica_vacaciones.md",
+        "faq_rrhh.md"
+      ],
+      "used_chunk_ids": [
+        "POL-VAC-001:recursive:000:f05eeb6e",
+        "FAQ-RRHH-005:recursive:000:8127fc62"
+      ]
+    }
+  },
+  "integrator": {
+    "email_threads": 4,
+    "samples": [
+      {
+        "thread_id": "thr_001",
+        "subject": "Consulta sobre vacaciones",
+        "status": "ANSWER",
+        "accepted": true,
+        "retrieved": 5,
+        "used": 2,
+        "cited": 2,
+        "draft": "# Preguntas frecuentes de RRHH Para pedir vacaciones, registrá la solicitud con 15 días corridos de anticipación. [SOURCE: faq_rrhh.md | CHUNK: FAQ-RRHH-005:recursive:000:8127fc62] Las solicitudes de vacaciones deben registrarse en la herramienta de RRHH con al menos 15 días corridos de anticipación. [SOURCE: politica_vacaciones.md | CHUNK: POL-VAC-001:recursive:000:f05eeb6e]",
+        "sources": [
+          "faq_rrhh.md",
+          "politica_vacaciones.md"
+        ],
+        "used_chunk_ids": [
+          "FAQ-RRHH-005:recursive:000:8127fc62",
+          "POL-VAC-001:recursive:000:f05eeb6e"
+        ],
+        "validation_errors": [],
+        "technical_error": null,
+        "requires_human_review": true
+      },
+      {
+        "thread_id": "thr_002",
+        "subject": "Reintegro de gastos",
+        "status": "ANSWER",
+        "accepted": true,
+        "retrieved": 5,
+        "used": 1,
+        "cited": 1,
+        "draft": "El reintegro se presenta dentro de los 30 días posteriores a la finalización. [SOURCE: beneficio_capacitacion.json | CHUNK: POL-BEN-007:recursive:000:74c98ad3]",
+        "sources": [
+          "beneficio_capacitacion.json"
+        ],
+        "used_chunk_ids": [
+          "POL-BEN-007:recursive:000:74c98ad3"
+        ],
+        "validation_errors": [],
+        "technical_error": null,
+        "requires_human_review": true
+      },
+      {
+        "thread_id": "thr_003",
+        "subject": "Credencial expuesta",
+        "status": "ANSWER",
+        "accepted": true,
+        "retrieved": 5,
+        "used": 3,
+        "cited": 2,
+        "draft": "Si se expone una credencial, cambiá la contraseña, revocá sesiones activas y abrí inmediatamente un incidente de seguridad. [SOURCE: respuesta_incidentes.txt | CHUNK: INC-SEC-006:recursive:000:db0b5e7d] El incidente debe incluir el sistema afectado, el horario aproximado y el canal por el que pudo haberse expuesto la credencial. [SOURCE: politica_seguridad.md | CHUNK: POL-SEC-003:recursive:001:b6ee93f8]",
+        "sources": [
+          "respuesta_incidentes.txt",
+          "politica_seguridad.md"
+        ],
+        "used_chunk_ids": [
+          "INC-SEC-006:recursive:000:db0b5e7d",
+          "POL-SEC-003:recursive:000:8dd616f6",
+          "POL-SEC-003:recursive:001:b6ee93f8"
+        ],
+        "validation_errors": [],
+        "technical_error": null,
+        "requires_human_review": true
+      },
+      {
+        "thread_id": "thr_004",
+        "subject": "Beneficio no documentado",
+        "status": "ABSTAIN",
+        "accepted": true,
+        "retrieved": 5,
+        "used": 0,
+        "cited": 0,
+        "draft": "No tengo evidencia suficiente en el contexto disponible.",
+        "sources": [],
+        "used_chunk_ids": [],
+        "validation_errors": [],
+        "technical_error": null,
+        "requires_human_review": true
+      }
+    ]
+  },
+  "tests": {
+    "executed": true,
+    "passed": true
+  },
+  "continuity_fixture": {
+    "module": "src/ai_agent_course/support_case.py",
+    "threads": 3,
+    "knowledge_base_chars": 631,
+    "used_by_c7_rag": false
+  },
+  "continuity": {
+    "increment": "context engineering, suficiencia, generación grounded, validación y composición con LangChain",
+    "next_class": 8
+  }
+}

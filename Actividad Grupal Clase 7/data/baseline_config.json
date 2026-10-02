@@ -1,0 +1,9 @@
+{
+  "inherited_min_score": 0.55,
+  "max_context_chars": 900,
+  "deduplicate": false,
+  "block_instruction_injection": false,
+  "on_budget_exceeded": "break",
+  "citation_scope": "retrieved",
+  "mode_policy": "answer_if_any"
+}

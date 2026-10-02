@@ -1,0 +1,1330 @@
+{
+  "class": 9,
+  "case_study": {
+    "name": "agente de gestión asistida de emails",
+    "stage": "agent_loop_local_tools",
+    "summary": "Tool contracts + Policy + Function Calling + Agent Loop con Gmail mock, RAG interno, dato externo y draft dry-run."
+  },
+  "tools": {
+    "registered": [
+      "create_draft",
+      "flaky_demo",
+      "generate_report",
+      "gmail_create_draft",
+      "gmail_read_thread",
+      "gmail_search_emails",
+      "lookup_service_status",
+      "search_policy",
+      "search_support_kb",
+      "slow_demo"
+    ],
+    "viewer_visible": [
+      "search_policy",
+      "lookup_service_status",
+      "slow_demo",
+      "flaky_demo",
+      "search_support_kb",
+      "gmail_search_emails",
+      "gmail_read_thread"
+    ],
+    "support_agent_visible": [
+      "search_policy",
+      "lookup_service_status",
+      "generate_report",
+      "create_draft",
+      "slow_demo",
+      "flaky_demo",
+      "search_support_kb",
+      "gmail_search_emails",
+      "gmail_read_thread",
+      "gmail_create_draft"
+    ],
+    "rag_backend": {
+      "backend": "qdrant-local",
+      "collection": "course_documents_v2",
+      "points": 8,
+      "embedding_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+      "vector_size": 384,
+      "normalization": "l2",
+      "index_version": "class05-v1",
+      "distance": "cosine",
+      "persistent": true
+    }
+  },
+  "lab": {
+    "controls": {
+      "invalid_args": {
+        "ok": false,
+        "content": "Argumentos inválidos",
+        "metadata": {
+          "error_type": "validation_error",
+          "details": [
+            {
+              "type": "string_too_short",
+              "loc": [
+                "query"
+              ],
+              "msg": "String should have at least 2 characters",
+              "input": "x",
+              "ctx": {
+                "min_length": 2
+              }
+            }
+          ]
+        }
+      },
+      "unknown_tool": {
+        "ok": false,
+        "content": "Tool desconocida: does_not_exist",
+        "metadata": {
+          "error_type": "unknown_tool"
+        }
+      },
+      "unavailable_tool": {
+        "ok": false,
+        "content": "Tool no disponible en este contexto: create_draft",
+        "metadata": {
+          "error_type": "unavailable_tool",
+          "role": "viewer",
+          "kind": "draft"
+        }
+      },
+      "authorization_error": {
+        "ok": false,
+        "content": "support-agent-demo no está autorizado para generar un reporte de support-ops.",
+        "metadata": {
+          "error_type": "authorization_error",
+          "tool": "generate_report"
+        }
+      },
+      "viewer_draft_attempt": {
+        "ok": false,
+        "content": "Tool no disponible en este contexto: gmail_create_draft",
+        "metadata": {
+          "error_type": "unavailable_tool",
+          "role": "viewer",
+          "kind": "draft"
+        }
+      },
+      "timeout": {
+        "ok": false,
+        "content": "Timeout ejecutando slow_demo",
+        "metadata": {
+          "error_type": "timeout",
+          "tool": "slow_demo",
+          "timeout_s": 0.02,
+          "attempt": 1
+        }
+      },
+      "retry": {
+        "ok": true,
+        "content": "éxito después del retry",
+        "metadata": {
+          "tool": "flaky_demo",
+          "kind": "read",
+          "attempt": 2,
+          "latency_ms": 0.16,
+          "idempotent": true
+        }
+      }
+    }
+  },
+  "function_calling": {
+    "live_mode": "True",
+    "demo": {
+      "executed": true,
+      "model": "gemini-3.1-flash-lite",
+      "tool_call": {
+        "name": "search_policy",
+        "arguments": {
+          "query": "anticipación de vacaciones"
+        }
+      },
+      "tool_result": {
+        "ok": true,
+        "content": "Las solicitudes de vacaciones deben registrarse en la herramienta de RRHH con al menos 15 días corridos de anticipación. [SOURCE: politica_vacaciones.md | CHUNK: POL-VAC-001:recursive:000:f05eeb6e]",
+        "metadata": {
+          "has_enough_evidence": true,
+          "sources": [
+            "politica_vacaciones.md"
+          ],
+          "backend": {
+            "backend": "qdrant-local",
+            "collection": "course_documents_v2",
+            "points": 8,
+            "embedding_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+            "vector_size": 384,
+            "normalization": "l2",
+            "index_version": "class05-v1",
+            "distance": "cosine",
+            "persistent": true
+          },
+          "generation_mode": "gemini-3.1-flash-lite",
+          "tool": "search_policy",
+          "kind": "read",
+          "attempt": 1,
+          "latency_ms": 2295.25,
+          "idempotent": true
+        }
+      },
+      "final_text": "De acuerdo con la política interna (POL-VAC-001), las solicitudes de vacaciones deben registrarse en la herramienta de RRHH con al menos **15 días corridos de anticipación**."
+    }
+  },
+  "agent": {
+    "basic_run": {
+      "answer": "Con la información obtenida: Las solicitudes de vacaciones deben registrarse en la herramienta de RRHH con al menos 15 días corridos de anticipación. [SOURCE: politica_vacaciones.md | CHUNK: POL-VAC-001:recursive:000:f05eeb6e]",
+      "trace": [
+        {
+          "run_id": "c9-viewer-demo",
+          "step": 1,
+          "event": "decision",
+          "decision": {
+            "action": "tool",
+            "tool_name": "search_policy",
+            "arguments": {
+              "query": "¿Con cuánta anticipación pido vacaciones?",
+              "top_k": 4
+            },
+            "final_answer": null
+          }
+        },
+        {
+          "run_id": "c9-viewer-demo",
+          "step": 1,
+          "event": "observation",
+          "tool": "search_policy",
+          "arguments": {
+            "query": "¿Con cuánta anticipación pido vacaciones?",
+            "top_k": 4
+          },
+          "observation": {
+            "ok": true,
+            "content": "Las solicitudes de vacaciones deben registrarse en la herramienta de RRHH con al menos 15 días corridos de anticipación. [SOURCE: politica_vacaciones.md | CHUNK: POL-VAC-001:recursive:000:f05eeb6e]",
+            "metadata": {
+              "has_enough_evidence": true,
+              "sources": [
+                "politica_vacaciones.md"
+              ],
+              "backend": {
+                "backend": "qdrant-local",
+                "collection": "course_documents_v2",
+                "points": 8,
+                "embedding_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+                "vector_size": 384,
+                "normalization": "l2",
+                "index_version": "class05-v1",
+                "distance": "cosine",
+                "persistent": true
+              },
+              "generation_mode": "gemini-3.1-flash-lite",
+              "tool": "search_policy",
+              "kind": "read",
+              "attempt": 1,
+              "latency_ms": 2253.09,
+              "idempotent": true
+            }
+          }
+        },
+        {
+          "run_id": "c9-viewer-demo",
+          "step": 2,
+          "event": "decision",
+          "decision": {
+            "action": "final",
+            "tool_name": null,
+            "arguments": {},
+            "final_answer": "Con la información obtenida: Las solicitudes de vacaciones deben registrarse en la herramienta de RRHH con al menos 15 días corridos de anticipación. [SOURCE: politica_vacaciones.md | CHUNK: POL-VAC-001:recursive:000:f05eeb6e]"
+          }
+        }
+      ],
+      "observations": [
+        {
+          "ok": true,
+          "content": "Las solicitudes de vacaciones deben registrarse en la herramienta de RRHH con al menos 15 días corridos de anticipación. [SOURCE: politica_vacaciones.md | CHUNK: POL-VAC-001:recursive:000:f05eeb6e]",
+          "metadata": {
+            "has_enough_evidence": true,
+            "sources": [
+              "politica_vacaciones.md"
+            ],
+            "backend": {
+              "backend": "qdrant-local",
+              "collection": "course_documents_v2",
+              "points": 8,
+              "embedding_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+              "vector_size": 384,
+              "normalization": "l2",
+              "index_version": "class05-v1",
+              "distance": "cosine",
+              "persistent": true
+            },
+            "generation_mode": "gemini-3.1-flash-lite",
+            "tool": "search_policy",
+            "kind": "read",
+            "attempt": 1,
+            "latency_ms": 2253.09,
+            "idempotent": true
+          }
+        }
+      ],
+      "stop_reason": "final_answer"
+    },
+    "basic_trace_summary": {
+      "events": 3,
+      "tool_calls": [
+        "search_policy"
+      ],
+      "errors": []
+    },
+    "repair_run": {
+      "answer": "No se pudo completar la generación.",
+      "trace": [
+        {
+          "run_id": "c9-repair-demo",
+          "step": 1,
+          "event": "decision",
+          "decision": {
+            "action": "tool",
+            "tool_name": "search_policy",
+            "arguments": {
+              "query": "¿Con cuánta anticipación se piden vacaciones?",
+              "top_k": 500
+            },
+            "final_answer": null
+          }
+        },
+        {
+          "run_id": "c9-repair-demo",
+          "step": 1,
+          "event": "observation",
+          "tool": "search_policy",
+          "arguments": {
+            "query": "¿Con cuánta anticipación se piden vacaciones?",
+            "top_k": 500
+          },
+          "observation": {
+            "ok": false,
+            "content": "Argumentos inválidos",
+            "metadata": {
+              "error_type": "validation_error",
+              "details": [
+                {
+                  "type": "less_than_equal",
+                  "loc": [
+                    "top_k"
+                  ],
+                  "msg": "Input should be less than or equal to 10",
+                  "input": 500,
+                  "ctx": {
+                    "le": 10
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "run_id": "c9-repair-demo",
+          "step": 2,
+          "event": "decision",
+          "decision": {
+            "action": "tool",
+            "tool_name": "search_policy",
+            "arguments": {
+              "query": "¿Con cuánta anticipación se piden vacaciones?",
+              "top_k": 4
+            },
+            "final_answer": null
+          }
+        },
+        {
+          "run_id": "c9-repair-demo",
+          "step": 2,
+          "event": "observation",
+          "tool": "search_policy",
+          "arguments": {
+            "query": "¿Con cuánta anticipación se piden vacaciones?",
+            "top_k": 4
+          },
+          "observation": {
+            "ok": true,
+            "content": "No se pudo completar la generación.",
+            "metadata": {
+              "has_enough_evidence": false,
+              "sources": [],
+              "backend": {
+                "backend": "qdrant-local",
+                "collection": "course_documents_v2",
+                "points": 8,
+                "embedding_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+                "vector_size": 384,
+                "normalization": "l2",
+                "index_version": "class05-v1",
+                "distance": "cosine",
+                "persistent": true
+              },
+              "generation_mode": "gemini-3.1-flash-lite",
+              "tool": "search_policy",
+              "kind": "read",
+              "attempt": 1,
+              "latency_ms": 1524.56,
+              "idempotent": true
+            }
+          }
+        },
+        {
+          "run_id": "c9-repair-demo",
+          "step": 3,
+          "event": "decision",
+          "decision": {
+            "action": "final",
+            "tool_name": null,
+            "arguments": {},
+            "final_answer": "No se pudo completar la generación."
+          }
+        }
+      ],
+      "observations": [
+        {
+          "ok": false,
+          "content": "Argumentos inválidos",
+          "metadata": {
+            "error_type": "validation_error",
+            "details": [
+              {
+                "type": "less_than_equal",
+                "loc": [
+                  "top_k"
+                ],
+                "msg": "Input should be less than or equal to 10",
+                "input": 500,
+                "ctx": {
+                  "le": 10
+                }
+              }
+            ]
+          }
+        },
+        {
+          "ok": true,
+          "content": "No se pudo completar la generación.",
+          "metadata": {
+            "has_enough_evidence": false,
+            "sources": [],
+            "backend": {
+              "backend": "qdrant-local",
+              "collection": "course_documents_v2",
+              "points": 8,
+              "embedding_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+              "vector_size": 384,
+              "normalization": "l2",
+              "index_version": "class05-v1",
+              "distance": "cosine",
+              "persistent": true
+            },
+            "generation_mode": "gemini-3.1-flash-lite",
+            "tool": "search_policy",
+            "kind": "read",
+            "attempt": 1,
+            "latency_ms": 1524.56,
+            "idempotent": true
+          }
+        }
+      ],
+      "stop_reason": "final_answer"
+    },
+    "repair_trace_summary": {
+      "events": 5,
+      "tool_calls": [
+        "search_policy",
+        "search_policy"
+      ],
+      "errors": [
+        "validation_error"
+      ]
+    },
+    "agentic_rag_run": {
+      "answer": "# Diagnóstico combinado\n\nWorkspace: `support-ops`\n\n- Conocimiento interno: No tengo evidencia suficiente para responder con seguridad.\n- Estado vigente: Componente no encontrado: portal",
+      "trace": [
+        {
+          "run_id": "c9-agentic-rag",
+          "step": 1,
+          "event": "decision",
+          "decision": {
+            "action": "tool",
+            "tool_name": "search_policy",
+            "arguments": {
+              "query": "¿Qué sabemos internamente sobre problemas del portal?",
+              "top_k": 4
+            },
+            "final_answer": null
+          }
+        },
+        {
+          "run_id": "c9-agentic-rag",
+          "step": 1,
+          "event": "observation",
+          "tool": "search_policy",
+          "arguments": {
+            "query": "¿Qué sabemos internamente sobre problemas del portal?",
+            "top_k": 4
+          },
+          "observation": {
+            "ok": true,
+            "content": "No tengo evidencia suficiente para responder con seguridad.",
+            "metadata": {
+              "has_enough_evidence": false,
+              "sources": [],
+              "backend": {
+                "backend": "qdrant-local",
+                "collection": "course_documents_v2",
+                "points": 8,
+                "embedding_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+                "vector_size": 384,
+                "normalization": "l2",
+                "index_version": "class05-v1",
+                "distance": "cosine",
+                "persistent": true
+              },
+              "generation_mode": "gemini-3.1-flash-lite",
+              "tool": "search_policy",
+              "kind": "read",
+              "attempt": 1,
+              "latency_ms": 3206.19,
+              "idempotent": true
+            }
+          }
+        },
+        {
+          "run_id": "c9-agentic-rag",
+          "step": 2,
+          "event": "decision",
+          "decision": {
+            "action": "tool",
+            "tool_name": "lookup_service_status",
+            "arguments": {
+              "service": "portal"
+            },
+            "final_answer": null
+          }
+        },
+        {
+          "run_id": "c9-agentic-rag",
+          "step": 2,
+          "event": "observation",
+          "tool": "lookup_service_status",
+          "arguments": {
+            "service": "portal"
+          },
+          "observation": {
+            "ok": false,
+            "content": "Componente no encontrado: portal",
+            "metadata": {
+              "error_type": "not_found",
+              "available_services": [
+                "Git Operations",
+                "Webhooks",
+                "Visit www.githubstatus.com for more information",
+                "API Requests",
+                "Issues",
+                "Pull Requests",
+                "Actions",
+                "Packages",
+                "Pages",
+                "Copilot",
+                "Codespaces",
+                "Copilot AI Model Providers"
+              ],
+              "source": "https://www.githubstatus.com/api/v2/summary.json",
+              "untrusted_external_data": true,
+              "tool": "lookup_service_status",
+              "kind": "read",
+              "attempt": 1,
+              "latency_ms": 55.69,
+              "idempotent": true
+            }
+          }
+        },
+        {
+          "run_id": "c9-agentic-rag",
+          "step": 3,
+          "event": "decision",
+          "decision": {
+            "action": "tool",
+            "tool_name": "generate_report",
+            "arguments": {
+              "workspace_id": "support-ops",
+              "title": "Diagnóstico combinado",
+              "facts": [
+                "Conocimiento interno: No tengo evidencia suficiente para responder con seguridad.",
+                "Estado vigente: Componente no encontrado: portal"
+              ]
+            },
+            "final_answer": null
+          }
+        },
+        {
+          "run_id": "c9-agentic-rag",
+          "step": 3,
+          "event": "observation",
+          "tool": "generate_report",
+          "arguments": {
+            "workspace_id": "support-ops",
+            "title": "Diagnóstico combinado",
+            "facts": [
+              "Conocimiento interno: No tengo evidencia suficiente para responder con seguridad.",
+              "Estado vigente: Componente no encontrado: portal"
+            ]
+          },
+          "observation": {
+            "ok": true,
+            "content": "# Diagnóstico combinado\n\nWorkspace: `support-ops`\n\n- Conocimiento interno: No tengo evidencia suficiente para responder con seguridad.\n- Estado vigente: Componente no encontrado: portal",
+            "metadata": {
+              "format": "markdown",
+              "fact_count": 2,
+              "workspace_id": "support-ops",
+              "tool": "generate_report",
+              "kind": "local_write",
+              "attempt": 1,
+              "latency_ms": 0.16,
+              "idempotent": true
+            }
+          }
+        },
+        {
+          "run_id": "c9-agentic-rag",
+          "step": 4,
+          "event": "decision",
+          "decision": {
+            "action": "final",
+            "tool_name": null,
+            "arguments": {},
+            "final_answer": "# Diagnóstico combinado\n\nWorkspace: `support-ops`\n\n- Conocimiento interno: No tengo evidencia suficiente para responder con seguridad.\n- Estado vigente: Componente no encontrado: portal"
+          }
+        }
+      ],
+      "observations": [
+        {
+          "ok": true,
+          "content": "No tengo evidencia suficiente para responder con seguridad.",
+          "metadata": {
+            "has_enough_evidence": false,
+            "sources": [],
+            "backend": {
+              "backend": "qdrant-local",
+              "collection": "course_documents_v2",
+              "points": 8,
+              "embedding_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+              "vector_size": 384,
+              "normalization": "l2",
+              "index_version": "class05-v1",
+              "distance": "cosine",
+              "persistent": true
+            },
+            "generation_mode": "gemini-3.1-flash-lite",
+            "tool": "search_policy",
+            "kind": "read",
+            "attempt": 1,
+            "latency_ms": 3206.19,
+            "idempotent": true
+          }
+        },
+        {
+          "ok": false,
+          "content": "Componente no encontrado: portal",
+          "metadata": {
+            "error_type": "not_found",
+            "available_services": [
+              "Git Operations",
+              "Webhooks",
+              "Visit www.githubstatus.com for more information",
+              "API Requests",
+              "Issues",
+              "Pull Requests",
+              "Actions",
+              "Packages",
+              "Pages",
+              "Copilot",
+              "Codespaces",
+              "Copilot AI Model Providers"
+            ],
+            "source": "https://www.githubstatus.com/api/v2/summary.json",
+            "untrusted_external_data": true,
+            "tool": "lookup_service_status",
+            "kind": "read",
+            "attempt": 1,
+            "latency_ms": 55.69,
+            "idempotent": true
+          }
+        },
+        {
+          "ok": true,
+          "content": "# Diagnóstico combinado\n\nWorkspace: `support-ops`\n\n- Conocimiento interno: No tengo evidencia suficiente para responder con seguridad.\n- Estado vigente: Componente no encontrado: portal",
+          "metadata": {
+            "format": "markdown",
+            "fact_count": 2,
+            "workspace_id": "support-ops",
+            "tool": "generate_report",
+            "kind": "local_write",
+            "attempt": 1,
+            "latency_ms": 0.16,
+            "idempotent": true
+          }
+        }
+      ],
+      "stop_reason": "final_answer"
+    },
+    "agentic_rag_trace_summary": {
+      "events": 7,
+      "tool_calls": [
+        "search_policy",
+        "lookup_service_status",
+        "generate_report"
+      ],
+      "errors": [
+        "not_found"
+      ]
+    },
+    "budget_run": {
+      "answer": "Se alcanzó el presupuesto de Tool Calls.",
+      "trace": [
+        {
+          "run_id": "c9-budget-demo",
+          "step": 1,
+          "event": "decision",
+          "decision": {
+            "action": "tool",
+            "tool_name": "search_policy",
+            "arguments": {
+              "query": "¿Qué sabemos internamente sobre problemas del portal?",
+              "top_k": 4
+            },
+            "final_answer": null
+          }
+        },
+        {
+          "run_id": "c9-budget-demo",
+          "step": 1,
+          "event": "observation",
+          "tool": "search_policy",
+          "arguments": {
+            "query": "¿Qué sabemos internamente sobre problemas del portal?",
+            "top_k": 4
+          },
+          "observation": {
+            "ok": true,
+            "content": "No tengo evidencia suficiente para responder con seguridad.",
+            "metadata": {
+              "has_enough_evidence": false,
+              "sources": [],
+              "backend": {
+                "backend": "qdrant-local",
+                "collection": "course_documents_v2",
+                "points": 8,
+                "embedding_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+                "vector_size": 384,
+                "normalization": "l2",
+                "index_version": "class05-v1",
+                "distance": "cosine",
+                "persistent": true
+              },
+              "generation_mode": "gemini-3.1-flash-lite",
+              "tool": "search_policy",
+              "kind": "read",
+              "attempt": 1,
+              "latency_ms": 2349.97,
+              "idempotent": true
+            }
+          }
+        },
+        {
+          "run_id": "c9-budget-demo",
+          "step": 2,
+          "event": "decision",
+          "decision": {
+            "action": "tool",
+            "tool_name": "lookup_service_status",
+            "arguments": {
+              "service": "portal"
+            },
+            "final_answer": null
+          }
+        }
+      ],
+      "observations": [
+        {
+          "ok": true,
+          "content": "No tengo evidencia suficiente para responder con seguridad.",
+          "metadata": {
+            "has_enough_evidence": false,
+            "sources": [],
+            "backend": {
+              "backend": "qdrant-local",
+              "collection": "course_documents_v2",
+              "points": 8,
+              "embedding_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+              "vector_size": 384,
+              "normalization": "l2",
+              "index_version": "class05-v1",
+              "distance": "cosine",
+              "persistent": true
+            },
+            "generation_mode": "gemini-3.1-flash-lite",
+            "tool": "search_policy",
+            "kind": "read",
+            "attempt": 1,
+            "latency_ms": 2349.97,
+            "idempotent": true
+          }
+        }
+      ],
+      "stop_reason": "budget"
+    }
+  },
+  "integrator": {
+    "gmail_agent_run": {
+      "answer": "Análisis completado. Se preparó un draft en dry-run y quedó pendiente de revisión humana.\n\n{\"draft_id\": \"draft_001\", \"thread_id\": \"thr_001\", \"body\": \"Gracias por el aviso. Revisamos la guía interna y el estado actual del servicio.\\n\\n# Diagnóstico de soporte\\n\\nWorkspace: `support-ops`\\n\\n- Email: Error al cargar facturas en el portal No podemos cargar facturas. El botón queda girando y bloquea el cierre mensual.\\n- Guía interna: Carga de facturas Si el problema afecta a varios usuarios o bloquea cierre mensual, clasificar como alta prioridad y escalar a soporte nivel 2. Pedir navegador, usuario afectado y horario.\\n- Estado actual: Estado externo no disponible: Componente no encontrado: portal\\n\\nEste borrador requiere revisión humana antes de enviarse.\", \"requires_approval\": true, \"executed\": false}",
+      "trace": [
+        {
+          "run_id": "c9-gmail-integrator",
+          "step": 1,
+          "event": "decision",
+          "decision": {
+            "action": "tool",
+            "tool_name": "gmail_search_emails",
+            "arguments": {
+              "query": "facturas",
+              "limit": 5
+            },
+            "final_answer": null
+          }
+        },
+        {
+          "run_id": "c9-gmail-integrator",
+          "step": 1,
+          "event": "observation",
+          "tool": "gmail_search_emails",
+          "arguments": {
+            "query": "facturas",
+            "limit": 5
+          },
+          "observation": {
+            "ok": true,
+            "content": "[{\"thread_id\": \"thr_001\", \"subject\": \"Error al cargar facturas en el portal\", \"from\": \"maria.gomez@cliente-demo.com\"}]",
+            "metadata": {
+              "results": [
+                {
+                  "thread_id": "thr_001",
+                  "subject": "Error al cargar facturas en el portal",
+                  "from": "maria.gomez@cliente-demo.com"
+                }
+              ],
+              "source": "gmail-mock",
+              "tool": "gmail_search_emails",
+              "kind": "read",
+              "attempt": 1,
+              "latency_ms": 0.17,
+              "idempotent": true
+            }
+          }
+        },
+        {
+          "run_id": "c9-gmail-integrator",
+          "step": 2,
+          "event": "decision",
+          "decision": {
+            "action": "tool",
+            "tool_name": "gmail_read_thread",
+            "arguments": {
+              "thread_id": "thr_001"
+            },
+            "final_answer": null
+          }
+        },
+        {
+          "run_id": "c9-gmail-integrator",
+          "step": 2,
+          "event": "observation",
+          "tool": "gmail_read_thread",
+          "arguments": {
+            "thread_id": "thr_001"
+          },
+          "observation": {
+            "ok": true,
+            "content": "{\"thread_id\": \"thr_001\", \"subject\": \"Error al cargar facturas en el portal\", \"from\": \"maria.gomez@cliente-demo.com\", \"labels\": [\"INBOX\", \"soporte\"], \"messages\": [{\"role\": \"customer\", \"body\": \"No podemos cargar facturas. El botón queda girando y bloquea el cierre mensual.\"}]}",
+            "metadata": {
+              "thread": {
+                "thread_id": "thr_001",
+                "subject": "Error al cargar facturas en el portal",
+                "from": "maria.gomez@cliente-demo.com",
+                "labels": [
+                  "INBOX",
+                  "soporte"
+                ],
+                "messages": [
+                  {
+                    "role": "customer",
+                    "body": "No podemos cargar facturas. El botón queda girando y bloquea el cierre mensual."
+                  }
+                ]
+              },
+              "source": "gmail-mock",
+              "tool": "gmail_read_thread",
+              "kind": "read",
+              "attempt": 1,
+              "latency_ms": 0.06,
+              "idempotent": true
+            }
+          }
+        },
+        {
+          "run_id": "c9-gmail-integrator",
+          "step": 3,
+          "event": "decision",
+          "decision": {
+            "action": "tool",
+            "tool_name": "search_support_kb",
+            "arguments": {
+              "query": "Error al cargar facturas en el portal No podemos cargar facturas. El botón queda girando y bloquea el cierre mensual.",
+              "top_k": 3
+            },
+            "final_answer": null
+          }
+        },
+        {
+          "run_id": "c9-gmail-integrator",
+          "step": 3,
+          "event": "observation",
+          "tool": "search_support_kb",
+          "arguments": {
+            "query": "Error al cargar facturas en el portal No podemos cargar facturas. El botón queda girando y bloquea el cierre mensual.",
+            "top_k": 3
+          },
+          "observation": {
+            "ok": true,
+            "content": "[{\"document_id\": \"SUP-FACTURAS\", \"chunk_id\": \"SUP-FACTURAS:recursive:000:c8feda22\", \"source\": \"support_knowledge_base.md\", \"text\": \"Carga de facturas Si el problema afecta a varios usuarios o bloquea cierre mensual, clasificar como alta prioridad y escalar a soporte nivel 2. Pedir navegador, usuario afectado y horario.\", \"metadata\": {\"topic\": \"Carga de facturas\", \"department\": \"support\", \"active\": true, \"chunk_strategy\": \"recursive\", \"chunk_index\": 0}}, {\"document_id\": \"SUP-VALIDACION\", \"chunk_id\": \"SUP-VALIDACION:recursive:000:0cda5dde\", \"source\": \"support_knowledge_base.md\", \"text\": \"Email de validación Si el email no llega, revisar spam, pedir dominio corporativo y reenviar validación.\", \"metadata\": {\"topic\": \"Email de validación\", \"department\": \"support\", \"active\": true, \"chunk_strategy\": \"recursive\", \"chunk_index\": 0}}, {\"document_id\": \"SUP-API\", \"chunk_id\": \"SUP-API:recursive:000:88321e47\", \"source\": \"support_knowledge_base.md\", \"text\": \"Integraciones y API Antes de prometer una integración, pedir caso de uso, sistema destino, volumen esperado y autenticación.\", \"metadata\": {\"topic\": \"Integraciones y API\", \"department\": \"support\", \"active\": true, \"chunk_strategy\": \"recursive\", \"chunk_index\": 0}}]",
+            "metadata": {
+              "has_results": true,
+              "results": [
+                {
+                  "document_id": "SUP-FACTURAS",
+                  "chunk_id": "SUP-FACTURAS:recursive:000:c8feda22",
+                  "source": "support_knowledge_base.md",
+                  "text": "Carga de facturas Si el problema afecta a varios usuarios o bloquea cierre mensual, clasificar como alta prioridad y escalar a soporte nivel 2. Pedir navegador, usuario afectado y horario.",
+                  "metadata": {
+                    "topic": "Carga de facturas",
+                    "department": "support",
+                    "active": true,
+                    "chunk_strategy": "recursive",
+                    "chunk_index": 0
+                  }
+                },
+                {
+                  "document_id": "SUP-VALIDACION",
+                  "chunk_id": "SUP-VALIDACION:recursive:000:0cda5dde",
+                  "source": "support_knowledge_base.md",
+                  "text": "Email de validación Si el email no llega, revisar spam, pedir dominio corporativo y reenviar validación.",
+                  "metadata": {
+                    "topic": "Email de validación",
+                    "department": "support",
+                    "active": true,
+                    "chunk_strategy": "recursive",
+                    "chunk_index": 0
+                  }
+                },
+                {
+                  "document_id": "SUP-API",
+                  "chunk_id": "SUP-API:recursive:000:88321e47",
+                  "source": "support_knowledge_base.md",
+                  "text": "Integraciones y API Antes de prometer una integración, pedir caso de uso, sistema destino, volumen esperado y autenticación.",
+                  "metadata": {
+                    "topic": "Integraciones y API",
+                    "department": "support",
+                    "active": true,
+                    "chunk_strategy": "recursive",
+                    "chunk_index": 0
+                  }
+                }
+              ],
+              "search_trace": {
+                "strategy": "hybrid_rerank",
+                "dense_candidates": 4,
+                "lexical_candidates": 4,
+                "fused_candidates": 4,
+                "reranked_candidates": 3,
+                "reranker": "lexical-overlap-smoke-only"
+              },
+              "tool": "search_support_kb",
+              "kind": "read",
+              "attempt": 1,
+              "latency_ms": 70.99,
+              "idempotent": true
+            }
+          }
+        },
+        {
+          "run_id": "c9-gmail-integrator",
+          "step": 4,
+          "event": "decision",
+          "decision": {
+            "action": "tool",
+            "tool_name": "lookup_service_status",
+            "arguments": {
+              "service": "portal"
+            },
+            "final_answer": null
+          }
+        },
+        {
+          "run_id": "c9-gmail-integrator",
+          "step": 4,
+          "event": "observation",
+          "tool": "lookup_service_status",
+          "arguments": {
+            "service": "portal"
+          },
+          "observation": {
+            "ok": false,
+            "content": "Componente no encontrado: portal",
+            "metadata": {
+              "error_type": "not_found",
+              "available_services": [
+                "Git Operations",
+                "Webhooks",
+                "Visit www.githubstatus.com for more information",
+                "API Requests",
+                "Issues",
+                "Pull Requests",
+                "Actions",
+                "Packages",
+                "Pages",
+                "Copilot",
+                "Codespaces",
+                "Copilot AI Model Providers"
+              ],
+              "source": "https://www.githubstatus.com/api/v2/summary.json",
+              "untrusted_external_data": true,
+              "tool": "lookup_service_status",
+              "kind": "read",
+              "attempt": 1,
+              "latency_ms": 72.31,
+              "idempotent": true
+            }
+          }
+        },
+        {
+          "run_id": "c9-gmail-integrator",
+          "step": 5,
+          "event": "decision",
+          "decision": {
+            "action": "tool",
+            "tool_name": "generate_report",
+            "arguments": {
+              "workspace_id": "support-ops",
+              "title": "Diagnóstico de soporte",
+              "facts": [
+                "Email: Error al cargar facturas en el portal No podemos cargar facturas. El botón queda girando y bloquea el cierre mensual.",
+                "Guía interna: Carga de facturas Si el problema afecta a varios usuarios o bloquea cierre mensual, clasificar como alta prioridad y escalar a soporte nivel 2. Pedir navegador, usuario afectado y horario.",
+                "Estado actual: Estado externo no disponible: Componente no encontrado: portal"
+              ]
+            },
+            "final_answer": null
+          }
+        },
+        {
+          "run_id": "c9-gmail-integrator",
+          "step": 5,
+          "event": "observation",
+          "tool": "generate_report",
+          "arguments": {
+            "workspace_id": "support-ops",
+            "title": "Diagnóstico de soporte",
+            "facts": [
+              "Email: Error al cargar facturas en el portal No podemos cargar facturas. El botón queda girando y bloquea el cierre mensual.",
+              "Guía interna: Carga de facturas Si el problema afecta a varios usuarios o bloquea cierre mensual, clasificar como alta prioridad y escalar a soporte nivel 2. Pedir navegador, usuario afectado y horario.",
+              "Estado actual: Estado externo no disponible: Componente no encontrado: portal"
+            ]
+          },
+          "observation": {
+            "ok": true,
+            "content": "# Diagnóstico de soporte\n\nWorkspace: `support-ops`\n\n- Email: Error al cargar facturas en el portal No podemos cargar facturas. El botón queda girando y bloquea el cierre mensual.\n- Guía interna: Carga de facturas Si el problema afecta a varios usuarios o bloquea cierre mensual, clasificar como alta prioridad y escalar a soporte nivel 2. Pedir navegador, usuario afectado y horario.\n- Estado actual: Estado externo no disponible: Componente no encontrado: portal",
+            "metadata": {
+              "format": "markdown",
+              "fact_count": 3,
+              "workspace_id": "support-ops",
+              "tool": "generate_report",
+              "kind": "local_write",
+              "attempt": 1,
+              "latency_ms": 0.09,
+              "idempotent": true
+            }
+          }
+        },
+        {
+          "run_id": "c9-gmail-integrator",
+          "step": 6,
+          "event": "decision",
+          "decision": {
+            "action": "tool",
+            "tool_name": "gmail_create_draft",
+            "arguments": {
+              "thread_id": "thr_001",
+              "body": "Gracias por el aviso. Revisamos la guía interna y el estado actual del servicio.\n\n# Diagnóstico de soporte\n\nWorkspace: `support-ops`\n\n- Email: Error al cargar facturas en el portal No podemos cargar facturas. El botón queda girando y bloquea el cierre mensual.\n- Guía interna: Carga de facturas Si el problema afecta a varios usuarios o bloquea cierre mensual, clasificar como alta prioridad y escalar a soporte nivel 2. Pedir navegador, usuario afectado y horario.\n- Estado actual: Estado externo no disponible: Componente no encontrado: portal\n\nEste borrador requiere revisión humana antes de enviarse.",
+              "dry_run": true
+            },
+            "final_answer": null
+          }
+        },
+        {
+          "run_id": "c9-gmail-integrator",
+          "step": 6,
+          "event": "observation",
+          "tool": "gmail_create_draft",
+          "arguments": {
+            "thread_id": "thr_001",
+            "body": "Gracias por el aviso. Revisamos la guía interna y el estado actual del servicio.\n\n# Diagnóstico de soporte\n\nWorkspace: `support-ops`\n\n- Email: Error al cargar facturas en el portal No podemos cargar facturas. El botón queda girando y bloquea el cierre mensual.\n- Guía interna: Carga de facturas Si el problema afecta a varios usuarios o bloquea cierre mensual, clasificar como alta prioridad y escalar a soporte nivel 2. Pedir navegador, usuario afectado y horario.\n- Estado actual: Estado externo no disponible: Componente no encontrado: portal\n\nEste borrador requiere revisión humana antes de enviarse.",
+            "dry_run": true
+          },
+          "observation": {
+            "ok": true,
+            "content": "{\"draft_id\": \"draft_001\", \"thread_id\": \"thr_001\", \"body\": \"Gracias por el aviso. Revisamos la guía interna y el estado actual del servicio.\\n\\n# Diagnóstico de soporte\\n\\nWorkspace: `support-ops`\\n\\n- Email: Error al cargar facturas en el portal No podemos cargar facturas. El botón queda girando y bloquea el cierre mensual.\\n- Guía interna: Carga de facturas Si el problema afecta a varios usuarios o bloquea cierre mensual, clasificar como alta prioridad y escalar a soporte nivel 2. Pedir navegador, usuario afectado y horario.\\n- Estado actual: Estado externo no disponible: Componente no encontrado: portal\\n\\nEste borrador requiere revisión humana antes de enviarse.\", \"requires_approval\": true, \"executed\": false}",
+            "metadata": {
+              "draft": {
+                "draft_id": "draft_001",
+                "thread_id": "thr_001",
+                "body": "Gracias por el aviso. Revisamos la guía interna y el estado actual del servicio.\n\n# Diagnóstico de soporte\n\nWorkspace: `support-ops`\n\n- Email: Error al cargar facturas en el portal No podemos cargar facturas. El botón queda girando y bloquea el cierre mensual.\n- Guía interna: Carga de facturas Si el problema afecta a varios usuarios o bloquea cierre mensual, clasificar como alta prioridad y escalar a soporte nivel 2. Pedir navegador, usuario afectado y horario.\n- Estado actual: Estado externo no disponible: Componente no encontrado: portal\n\nEste borrador requiere revisión humana antes de enviarse.",
+                "requires_approval": true,
+                "executed": false
+              },
+              "requires_approval": true,
+              "source": "gmail-mock",
+              "tool": "gmail_create_draft",
+              "kind": "draft",
+              "attempt": 1,
+              "latency_ms": 0.07,
+              "idempotent": false
+            }
+          }
+        },
+        {
+          "run_id": "c9-gmail-integrator",
+          "step": 7,
+          "event": "decision",
+          "decision": {
+            "action": "final",
+            "tool_name": null,
+            "arguments": {},
+            "final_answer": "Análisis completado. Se preparó un draft en dry-run y quedó pendiente de revisión humana.\n\n{\"draft_id\": \"draft_001\", \"thread_id\": \"thr_001\", \"body\": \"Gracias por el aviso. Revisamos la guía interna y el estado actual del servicio.\\n\\n# Diagnóstico de soporte\\n\\nWorkspace: `support-ops`\\n\\n- Email: Error al cargar facturas en el portal No podemos cargar facturas. El botón queda girando y bloquea el cierre mensual.\\n- Guía interna: Carga de facturas Si el problema afecta a varios usuarios o bloquea cierre mensual, clasificar como alta prioridad y escalar a soporte nivel 2. Pedir navegador, usuario afectado y horario.\\n- Estado actual: Estado externo no disponible: Componente no encontrado: portal\\n\\nEste borrador requiere revisión humana antes de enviarse.\", \"requires_approval\": true, \"executed\": false}"
+          }
+        }
+      ],
+      "observations": [
+        {
+          "ok": true,
+          "content": "[{\"thread_id\": \"thr_001\", \"subject\": \"Error al cargar facturas en el portal\", \"from\": \"maria.gomez@cliente-demo.com\"}]",
+          "metadata": {
+            "results": [
+              {
+                "thread_id": "thr_001",
+                "subject": "Error al cargar facturas en el portal",
+                "from": "maria.gomez@cliente-demo.com"
+              }
+            ],
+            "source": "gmail-mock",
+            "tool": "gmail_search_emails",
+            "kind": "read",
+            "attempt": 1,
+            "latency_ms": 0.17,
+            "idempotent": true
+          }
+        },
+        {
+          "ok": true,
+          "content": "{\"thread_id\": \"thr_001\", \"subject\": \"Error al cargar facturas en el portal\", \"from\": \"maria.gomez@cliente-demo.com\", \"labels\": [\"INBOX\", \"soporte\"], \"messages\": [{\"role\": \"customer\", \"body\": \"No podemos cargar facturas. El botón queda girando y bloquea el cierre mensual.\"}]}",
+          "metadata": {
+            "thread": {
+              "thread_id": "thr_001",
+              "subject": "Error al cargar facturas en el portal",
+              "from": "maria.gomez@cliente-demo.com",
+              "labels": [
+                "INBOX",
+                "soporte"
+              ],
+              "messages": [
+                {
+                  "role": "customer",
+                  "body": "No podemos cargar facturas. El botón queda girando y bloquea el cierre mensual."
+                }
+              ]
+            },
+            "source": "gmail-mock",
+            "tool": "gmail_read_thread",
+            "kind": "read",
+            "attempt": 1,
+            "latency_ms": 0.06,
+            "idempotent": true
+          }
+        },
+        {
+          "ok": true,
+          "content": "[{\"document_id\": \"SUP-FACTURAS\", \"chunk_id\": \"SUP-FACTURAS:recursive:000:c8feda22\", \"source\": \"support_knowledge_base.md\", \"text\": \"Carga de facturas Si el problema afecta a varios usuarios o bloquea cierre mensual, clasificar como alta prioridad y escalar a soporte nivel 2. Pedir navegador, usuario afectado y horario.\", \"metadata\": {\"topic\": \"Carga de facturas\", \"department\": \"support\", \"active\": true, \"chunk_strategy\": \"recursive\", \"chunk_index\": 0}}, {\"document_id\": \"SUP-VALIDACION\", \"chunk_id\": \"SUP-VALIDACION:recursive:000:0cda5dde\", \"source\": \"support_knowledge_base.md\", \"text\": \"Email de validación Si el email no llega, revisar spam, pedir dominio corporativo y reenviar validación.\", \"metadata\": {\"topic\": \"Email de validación\", \"department\": \"support\", \"active\": true, \"chunk_strategy\": \"recursive\", \"chunk_index\": 0}}, {\"document_id\": \"SUP-API\", \"chunk_id\": \"SUP-API:recursive:000:88321e47\", \"source\": \"support_knowledge_base.md\", \"text\": \"Integraciones y API Antes de prometer una integración, pedir caso de uso, sistema destino, volumen esperado y autenticación.\", \"metadata\": {\"topic\": \"Integraciones y API\", \"department\": \"support\", \"active\": true, \"chunk_strategy\": \"recursive\", \"chunk_index\": 0}}]",
+          "metadata": {
+            "has_results": true,
+            "results": [
+              {
+                "document_id": "SUP-FACTURAS",
+                "chunk_id": "SUP-FACTURAS:recursive:000:c8feda22",
+                "source": "support_knowledge_base.md",
+                "text": "Carga de facturas Si el problema afecta a varios usuarios o bloquea cierre mensual, clasificar como alta prioridad y escalar a soporte nivel 2. Pedir navegador, usuario afectado y horario.",
+                "metadata": {
+                  "topic": "Carga de facturas",
+                  "department": "support",
+                  "active": true,
+                  "chunk_strategy": "recursive",
+                  "chunk_index": 0
+                }
+              },
+              {
+                "document_id": "SUP-VALIDACION",
+                "chunk_id": "SUP-VALIDACION:recursive:000:0cda5dde",
+                "source": "support_knowledge_base.md",
+                "text": "Email de validación Si el email no llega, revisar spam, pedir dominio corporativo y reenviar validación.",
+                "metadata": {
+                  "topic": "Email de validación",
+                  "department": "support",
+                  "active": true,
+                  "chunk_strategy": "recursive",
+                  "chunk_index": 0
+                }
+              },
+              {
+                "document_id": "SUP-API",
+                "chunk_id": "SUP-API:recursive:000:88321e47",
+                "source": "support_knowledge_base.md",
+                "text": "Integraciones y API Antes de prometer una integración, pedir caso de uso, sistema destino, volumen esperado y autenticación.",
+                "metadata": {
+                  "topic": "Integraciones y API",
+                  "department": "support",
+                  "active": true,
+                  "chunk_strategy": "recursive",
+                  "chunk_index": 0
+                }
+              }
+            ],
+            "search_trace": {
+              "strategy": "hybrid_rerank",
+              "dense_candidates": 4,
+              "lexical_candidates": 4,
+              "fused_candidates": 4,
+              "reranked_candidates": 3,
+              "reranker": "lexical-overlap-smoke-only"
+            },
+            "tool": "search_support_kb",
+            "kind": "read",
+            "attempt": 1,
+            "latency_ms": 70.99,
+            "idempotent": true
+          }
+        },
+        {
+          "ok": false,
+          "content": "Componente no encontrado: portal",
+          "metadata": {
+            "error_type": "not_found",
+            "available_services": [
+              "Git Operations",
+              "Webhooks",
+              "Visit www.githubstatus.com for more information",
+              "API Requests",
+              "Issues",
+              "Pull Requests",
+              "Actions",
+              "Packages",
+              "Pages",
+              "Copilot",
+              "Codespaces",
+              "Copilot AI Model Providers"
+            ],
+            "source": "https://www.githubstatus.com/api/v2/summary.json",
+            "untrusted_external_data": true,
+            "tool": "lookup_service_status",
+            "kind": "read",
+            "attempt": 1,
+            "latency_ms": 72.31,
+            "idempotent": true
+          }
+        },
+        {
+          "ok": true,
+          "content": "# Diagnóstico de soporte\n\nWorkspace: `support-ops`\n\n- Email: Error al cargar facturas en el portal No podemos cargar facturas. El botón queda girando y bloquea el cierre mensual.\n- Guía interna: Carga de facturas Si el problema afecta a varios usuarios o bloquea cierre mensual, clasificar como alta prioridad y escalar a soporte nivel 2. Pedir navegador, usuario afectado y horario.\n- Estado actual: Estado externo no disponible: Componente no encontrado: portal",
+          "metadata": {
+            "format": "markdown",
+            "fact_count": 3,
+            "workspace_id": "support-ops",
+            "tool": "generate_report",
+            "kind": "local_write",
+            "attempt": 1,
+            "latency_ms": 0.09,
+            "idempotent": true
+          }
+        },
+        {
+          "ok": true,
+          "content": "{\"draft_id\": \"draft_001\", \"thread_id\": \"thr_001\", \"body\": \"Gracias por el aviso. Revisamos la guía interna y el estado actual del servicio.\\n\\n# Diagnóstico de soporte\\n\\nWorkspace: `support-ops`\\n\\n- Email: Error al cargar facturas en el portal No podemos cargar facturas. El botón queda girando y bloquea el cierre mensual.\\n- Guía interna: Carga de facturas Si el problema afecta a varios usuarios o bloquea cierre mensual, clasificar como alta prioridad y escalar a soporte nivel 2. Pedir navegador, usuario afectado y horario.\\n- Estado actual: Estado externo no disponible: Componente no encontrado: portal\\n\\nEste borrador requiere revisión humana antes de enviarse.\", \"requires_approval\": true, \"executed\": false}",
+          "metadata": {
+            "draft": {
+              "draft_id": "draft_001",
+              "thread_id": "thr_001",
+              "body": "Gracias por el aviso. Revisamos la guía interna y el estado actual del servicio.\n\n# Diagnóstico de soporte\n\nWorkspace: `support-ops`\n\n- Email: Error al cargar facturas en el portal No podemos cargar facturas. El botón queda girando y bloquea el cierre mensual.\n- Guía interna: Carga de facturas Si el problema afecta a varios usuarios o bloquea cierre mensual, clasificar como alta prioridad y escalar a soporte nivel 2. Pedir navegador, usuario afectado y horario.\n- Estado actual: Estado externo no disponible: Componente no encontrado: portal\n\nEste borrador requiere revisión humana antes de enviarse.",
+              "requires_approval": true,
+              "executed": false
+            },
+            "requires_approval": true,
+            "source": "gmail-mock",
+            "tool": "gmail_create_draft",
+            "kind": "draft",
+            "attempt": 1,
+            "latency_ms": 0.07,
+            "idempotent": false
+          }
+        }
+      ],
+      "stop_reason": "final_answer"
+    },
+    "gmail_trace_summary": {
+      "events": 13,
+      "tool_calls": [
+        "gmail_search_emails",
+        "gmail_read_thread",
+        "search_support_kb",
+        "lookup_service_status",
+        "generate_report",
+        "gmail_create_draft"
+      ],
+      "errors": [
+        "not_found"
+      ]
+    },
+    "tools_used": [
+      "gmail_search_emails",
+      "gmail_read_thread",
+      "search_support_kb",
+      "lookup_service_status",
+      "generate_report",
+      "gmail_create_draft"
+    ],
+    "mock_gmail_drafts": [
+      {
+        "draft_id": "draft_001",
+        "thread_id": "thr_001",
+        "body": "Gracias por el aviso. Revisamos la guía interna y el estado actual del servicio.\n\n# Diagnóstico de soporte\n\nWorkspace: `support-ops`\n\n- Email: Error al cargar facturas en el portal No podemos cargar facturas. El botón queda girando y bloquea el cierre mensual.\n- Guía interna: Carga de facturas Si el problema afecta a varios usuarios o bloquea cierre mensual, clasificar como alta prioridad y escalar a soporte nivel 2. Pedir navegador, usuario afectado y horario.\n- Estado actual: Estado externo no disponible: Componente no encontrado: portal\n\nEste borrador requiere revisión humana antes de enviarse.",
+        "requires_approval": true,
+        "executed": false
+      }
+    ],
+    "draft_count": 1
+  },
+  "continuity": {
+    "increment": "Tools tipadas, Policy, validation, authorization, Function Calling, Agent Loop y Agentic RAG",
+    "next_class": 10
+  }
+}

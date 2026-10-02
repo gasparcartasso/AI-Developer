@@ -1,0 +1,227 @@
+[
+  {
+    "case_id": "Q01",
+    "query": "¿Cuántos días de vacaciones tengo por año?",
+    "case_type": "conflicto_version",
+    "relevant_section_ids": [
+      "VAC26_DIAS"
+    ]
+  },
+  {
+    "case_id": "Q02",
+    "query": "¿Con cuánta anticipación tengo que pedir vacaciones?",
+    "case_type": "conflicto_version",
+    "relevant_section_ids": [
+      "VAC26_SOLICITUD"
+    ]
+  },
+  {
+    "case_id": "Q03",
+    "query": "¿Puedo pasar días de vacaciones al año siguiente?",
+    "case_type": "conflicto_version",
+    "relevant_section_ids": [
+      "VAC26_ARRASTRE"
+    ]
+  },
+  {
+    "case_id": "Q04",
+    "query": "¿Cuántos días puedo hacer home office?",
+    "case_type": "sinonimo_y_version",
+    "relevant_section_ids": [
+      "HYB26_DIAS"
+    ]
+  },
+  {
+    "case_id": "Q05",
+    "query": "¿Puedo trabajar remotamente desde Uruguay una semana?",
+    "case_type": "restriccion",
+    "relevant_section_ids": [
+      "HYB26_EXTERIOR"
+    ]
+  },
+  {
+    "case_id": "Q06",
+    "query": "¿Cómo me conecto a los sistemas internos desde mi casa?",
+    "case_type": "cross_domain",
+    "relevant_section_ids": [
+      "SEC_VPN"
+    ]
+  },
+  {
+    "case_id": "Q07",
+    "query": "¿Puedo entrar a producción desde mi notebook personal?",
+    "case_type": "seguridad",
+    "relevant_section_ids": [
+      "SEC_DISPOSITIVOS"
+    ]
+  },
+  {
+    "case_id": "Q08",
+    "query": "¿Cuál es el tope por persona para una comida de trabajo en Buenos Aires?",
+    "case_type": "ambiguedad_contexto",
+    "relevant_section_ids": [
+      "EXP_LOCAL_COMIDAS"
+    ]
+  },
+  {
+    "case_id": "Q09",
+    "query": "Estoy de viaje con pernocte, ¿cuánto puedo rendir de comidas por día?",
+    "case_type": "ambiguedad_contexto",
+    "relevant_section_ids": [
+      "TRV_COMIDAS"
+    ]
+  },
+  {
+    "case_id": "Q10",
+    "query": "¿Cuántos días adicionales da la empresa por nacimiento o adopción?",
+    "case_type": "directa",
+    "relevant_section_ids": [
+      "LEAVE_PARENTAL"
+    ]
+  },
+  {
+    "case_id": "Q11",
+    "query": "¿Cuántos días puedo tomar para rendir exámenes?",
+    "case_type": "directa",
+    "relevant_section_ids": [
+      "LEAVE_ESTUDIO"
+    ]
+  },
+  {
+    "case_id": "Q12",
+    "query": "Quiero comprar un servicio por USD 7.500. ¿Cuántas cotizaciones necesito?",
+    "case_type": "regla_numerica",
+    "relevant_section_ids": [
+      "PROC_COTIZACIONES"
+    ]
+  },
+  {
+    "case_id": "Q13",
+    "query": "Perdí la notebook corporativa. ¿Qué hago primero?",
+    "case_type": "evidencia_multiple",
+    "relevant_section_ids": [
+      "SEC_INCIDENTE",
+      "HELP_LOST"
+    ]
+  },
+  {
+    "case_id": "Q14",
+    "query": "No me funciona el segundo factor y no tengo ninguna sesión iniciada.",
+    "case_type": "evidencia_multiple",
+    "relevant_section_ids": [
+      "SEC_MFA",
+      "HELP_MFA"
+    ]
+  },
+  {
+    "case_id": "Q15",
+    "query": "¿Dónde puedo denunciar una situación de acoso sin identificarme?",
+    "case_type": "sinonimo",
+    "relevant_section_ids": [
+      "ETH_REPORTE"
+    ]
+  },
+  {
+    "case_id": "Q16",
+    "query": "¿Puedo mandar un archivo confidencial a mi Gmail personal para seguir trabajando?",
+    "case_type": "seguridad",
+    "relevant_section_ids": [
+      "INF_COMPARTIR"
+    ]
+  },
+  {
+    "case_id": "Q17",
+    "query": "¿La empresa me reintegra un curso externo relacionado con mi rol?",
+    "case_type": "directa",
+    "relevant_section_ids": [
+      "LEARN_REINTEGRO"
+    ]
+  },
+  {
+    "case_id": "Q18",
+    "query": "¿Cuántos días tengo para cargar un reintegro después de hacer el gasto?",
+    "case_type": "directa",
+    "relevant_section_ids": [
+      "EXP_PLAZO"
+    ]
+  },
+  {
+    "case_id": "Q19",
+    "query": "¿La empresa cubre la guardería de mis hijos?",
+    "case_type": "sin_respuesta",
+    "relevant_section_ids": []
+  },
+  {
+    "case_id": "Q20",
+    "query": "¿Todos los empleados reciben stock options?",
+    "case_type": "sin_respuesta",
+    "relevant_section_ids": []
+  },
+  {
+    "case_id": "Q21",
+    "query": "¿La empresa ofrece estacionamiento gratuito?",
+    "case_type": "sin_respuesta",
+    "relevant_section_ids": []
+  },
+  {
+    "case_id": "Q22",
+    "query": "Resumime la política vigente de vacaciones: días, anticipación y arrastre.",
+    "case_type": "version_multiple_evidences",
+    "relevant_section_ids": [
+      "VAC26_DIAS",
+      "VAC26_SOLICITUD",
+      "VAC26_ARRASTRE"
+    ]
+  },
+  {
+    "case_id": "Q23",
+    "query": "Voy a trabajar una semana desde Uruguay y necesito acceder a sistemas internos. ¿Qué condiciones debo cumplir?",
+    "case_type": "coverage_top_k",
+    "relevant_section_ids": [
+      "HYB26_EXTERIOR",
+      "SEC_VPN",
+      "SEC_DISPOSITIVOS",
+      "INF_REMOTO"
+    ]
+  },
+  {
+    "case_id": "Q24",
+    "query": "Tengo un viaje corporativo con pernocte. ¿Qué debo revisar sobre aprobación, comidas y alojamiento?",
+    "case_type": "multiple_evidences",
+    "relevant_section_ids": [
+      "TRV_APROBACION",
+      "TRV_COMIDAS",
+      "TRV_HOTEL"
+    ]
+  },
+  {
+    "case_id": "Q25",
+    "query": "¿Los empleados tienen estacionamiento gratuito todos los días?",
+    "case_type": "sin_respuesta_distractor",
+    "relevant_section_ids": []
+  },
+  {
+    "case_id": "Q26",
+    "query": "¿La empresa paga una membresía mensual de gimnasio?",
+    "case_type": "sin_respuesta_distractor",
+    "relevant_section_ids": []
+  },
+  {
+    "case_id": "Q27",
+    "query": "¿Qué VPN debo usar hoy para conectarme desde casa?",
+    "case_type": "conflicto_version",
+    "relevant_section_ids": [
+      "SEC_VPN"
+    ]
+  },
+  {
+    "case_id": "Q28",
+    "query": "¿Qué límites de comida existen según sea una comida local, un viaje o un evento interno?",
+    "case_type": "domain_collision",
+    "relevant_section_ids": [
+      "EXP_LOCAL_COMIDAS",
+      "TRV_COMIDAS",
+      "EVT_COMIDAS"
+    ]
+  }
+]

@@ -1,0 +1,95 @@
+{
+  "class": 2,
+  "model": "gemini-3.1-flash-lite",
+  "live_mode": false,
+  "patterns": [
+    "zero-shot",
+    "few-shot",
+    "descomposición verificable",
+    "structured output"
+  ],
+  "eval": {
+    "accuracy_intent": 1.0,
+    "accuracy_human_review": 1.0,
+    "results": [
+      {
+        "id": "vacaciones_claro",
+        "expected": "vacaciones",
+        "predicted": "vacaciones",
+        "expected_human": false,
+        "needs_human": false,
+        "confidence": 0.86,
+        "ok_intent": true,
+        "ok_human": true,
+        "summary": "Solicitud relacionada con vacaciones o licencia."
+      },
+      {
+        "id": "gastos_claro",
+        "expected": "gastos",
+        "predicted": "gastos",
+        "expected_human": false,
+        "needs_human": false,
+        "confidence": 0.84,
+        "ok_intent": true,
+        "ok_human": true,
+        "summary": "Solicitud relacionada con gastos o reintegros."
+      },
+      {
+        "id": "seguridad_password",
+        "expected": "seguridad",
+        "predicted": "seguridad",
+        "expected_human": true,
+        "needs_human": true,
+        "confidence": 0.93,
+        "ok_intent": true,
+        "ok_human": true,
+        "summary": "Posible incidente de seguridad o exposición de credenciales."
+      },
+      {
+        "id": "remoto_claro",
+        "expected": "trabajo_remoto",
+        "predicted": "trabajo_remoto",
+        "expected_human": false,
+        "needs_human": false,
+        "confidence": 0.81,
+        "ok_intent": true,
+        "ok_human": true,
+        "summary": "Consulta sobre modalidad de trabajo remoto."
+      },
+      {
+        "id": "ambiguo",
+        "expected": "general",
+        "predicted": "general",
+        "expected_human": true,
+        "needs_human": true,
+        "confidence": 0.58,
+        "ok_intent": true,
+        "ok_human": true,
+        "summary": "Solicitud general o ambigua que requiere más información."
+      },
+      {
+        "id": "instruccion_insertada",
+        "expected": "seguridad",
+        "predicted": "seguridad",
+        "expected_human": true,
+        "needs_human": true,
+        "confidence": 0.93,
+        "ok_intent": true,
+        "ok_human": true,
+        "summary": "Posible incidente de seguridad o exposición de credenciales."
+      },
+      {
+        "id": "input_corto",
+        "expected": "general",
+        "predicted": "general",
+        "expected_human": true,
+        "needs_human": true,
+        "confidence": 0.0,
+        "ok_intent": true,
+        "ok_human": true,
+        "summary": "Fallback seguro: Input demasiado corto para clasificar con confianza"
+      }
+    ]
+  },
+  "conclusion": "aumentar la estructura de la respuesta ayuda al procesamiento y análisis de la información"
+}

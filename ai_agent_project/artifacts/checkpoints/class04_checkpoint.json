@@ -1,0 +1,7 @@
+{
+  "class": 4,
+  "canonical_model": "gemini-3.1-flash-lite",
+  "increment": "Ollama, benchmark y routing cloud/local",
+  "default_mode": "simulated_or_local",
+  "next_class": 5
+}

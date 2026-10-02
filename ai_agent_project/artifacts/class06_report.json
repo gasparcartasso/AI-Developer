@@ -1,0 +1,392 @@
+{
+  "class": 6,
+  "case_study": {
+    "name": "agente de gestión asistida de emails",
+    "stage": "retrieval",
+    "summary": "Recuperar la política relevante para una consulta o email y medir si el retriever encuentra la evidencia correcta."
+  },
+  "embedding": {
+    "model": "paraphrase-multilingual-MiniLM-L12-v2",
+    "dimension": 384,
+    "mode": "real"
+  },
+  "retrieval": {
+    "backend": {
+      "backend": "in-memory-compatible",
+      "points": 10,
+      "embedding_model": "paraphrase-multilingual-MiniLM-L12-v2",
+      "vector_size": 384,
+      "persistent": false
+    },
+    "documents": 8,
+    "chunks": 10,
+    "index_latency_ms": 837.35,
+    "cache": {
+      "hits": 12,
+      "misses": 14,
+      "hit_rate": 0.462,
+      "entries": 28
+    }
+  },
+  "evaluation": {
+    "per_case": [
+      {
+        "case_id": "VAC-01",
+        "category": "vacaciones",
+        "top_docs": [
+          "FAQ-RRHH-005",
+          "POL-VAC-001",
+          "POL-MTG-008",
+          "POL-BEN-007",
+          "POL-EXP-002"
+        ],
+        "precision@3": 0.667,
+        "recall@3": 1.0,
+        "hit@3": 1.0,
+        "mrr": 1.0,
+        "top_score": 0.528,
+        "latency_ms": 20.752
+      },
+      {
+        "case_id": "EXP-01",
+        "category": "gastos",
+        "top_docs": [
+          "POL-BEN-007",
+          "FAQ-RRHH-005",
+          "POL-VAC-001",
+          "POL-SEC-003"
+        ],
+        "precision@3": 0.0,
+        "recall@3": 0.0,
+        "hit@3": 0.0,
+        "mrr": 0.0,
+        "top_score": 0.664,
+        "latency_ms": 24.506
+      },
+      {
+        "case_id": "SEC-01",
+        "category": "seguridad",
+        "top_docs": [
+          "INC-SEC-006",
+          "POL-SEC-003",
+          "FAQ-RRHH-005",
+          "POL-VAC-001"
+        ],
+        "precision@3": 0.667,
+        "recall@3": 1.0,
+        "hit@3": 1.0,
+        "mrr": 1.0,
+        "top_score": 0.557,
+        "latency_ms": 123.426
+      },
+      {
+        "case_id": "REM-01",
+        "category": "trabajo remoto",
+        "top_docs": [
+          "POL-REM-004",
+          "POL-VAC-001",
+          "POL-BEN-007",
+          "FAQ-RRHH-005",
+          "POL-SEC-003"
+        ],
+        "precision@3": 0.333,
+        "recall@3": 1.0,
+        "hit@3": 1.0,
+        "mrr": 1.0,
+        "top_score": 0.636,
+        "latency_ms": 124.442
+      },
+      {
+        "case_id": "CAP-01",
+        "category": "capacitación",
+        "top_docs": [
+          "POL-BEN-007",
+          "POL-REM-004",
+          "FAQ-RRHH-005",
+          "POL-SEC-003",
+          "POL-VAC-001"
+        ],
+        "precision@3": 0.333,
+        "recall@3": 1.0,
+        "hit@3": 1.0,
+        "mrr": 1.0,
+        "top_score": 0.586,
+        "latency_ms": 15.965
+      }
+    ],
+    "aggregate_by_k": [
+      {
+        "k": 1,
+        "mean_precision": 0.8,
+        "mean_recall": 0.6,
+        "hit_rate": 0.8
+      },
+      {
+        "k": 3,
+        "mean_precision": 0.4,
+        "mean_recall": 0.8,
+        "hit_rate": 0.8
+      },
+      {
+        "k": 5,
+        "mean_precision": 0.26,
+        "mean_recall": 0.8,
+        "hit_rate": 0.8
+      }
+    ],
+    "mrr": 0.8,
+    "diagnostics": [
+      {
+        "case_id": "VAC-01",
+        "category": "vacaciones",
+        "diagnosis": "baseline correcto"
+      },
+      {
+        "case_id": "EXP-01",
+        "category": "gastos",
+        "diagnosis": "no recupera evidencia: revisar corpus, chunking y embedding"
+      },
+      {
+        "case_id": "SEC-01",
+        "category": "seguridad",
+        "diagnosis": "baseline correcto"
+      },
+      {
+        "case_id": "REM-01",
+        "category": "trabajo remoto",
+        "diagnosis": "hay evidencia, pero también mucho ruido"
+      },
+      {
+        "case_id": "CAP-01",
+        "category": "capacitación",
+        "diagnosis": "hay evidencia, pero también mucho ruido"
+      }
+    ],
+    "no_evidence": {
+      "query": "¿la empresa ofrece estacionamiento gratuito?",
+      "threshold": 0.45,
+      "accepted_results": 0,
+      "note": "Threshold didáctico: debe calibrarse para cada configuración real."
+    },
+    "latency": {
+      "queries": 6,
+      "mean_ms": 53.602,
+      "median_ms": 22.629,
+      "max_ms": 124.442
+    }
+  },
+  "handoff": {
+    "chunks": [
+      {
+        "chunk_id": "POL-VAC-001:recursive:000:f05eeb6e",
+        "document_id": "POL-VAC-001",
+        "text": "Las solicitudes de vacaciones deben registrarse en la herramienta de RRHH con al menos 15 días corridos de anticipación. La carga inicia el circuito de revisión, pero no implica aprobación automática. El líder directo valida la cobertura operativa y las fechas solicitadas.",
+        "source": "politica_vacaciones.md",
+        "page": 1,
+        "metadata": {
+          "topic": "vacaciones",
+          "department": "RRHH",
+          "active": true,
+          "version": "2026.1",
+          "chunk_strategy": "recursive",
+          "chunk_index": 0
+        }
+      },
+      {
+        "chunk_id": "POL-VAC-001:recursive:001:2bc935bb",
+        "document_id": "POL-VAC-001",
+        "text": "cobertura operativa y las fechas solicitadas. Si existe una urgencia, la persona debe documentar la excepción y solicitar aprobación explícita del líder y de RRHH. Una solicitud ya aprobada puede modificarse únicamente cancelando las fechas originales y creando una nueva solicitud.",
+        "source": "politica_vacaciones.md",
+        "page": 1,
+        "metadata": {
+          "topic": "vacaciones",
+          "department": "RRHH",
+          "active": true,
+          "version": "2026.1",
+          "chunk_strategy": "recursive",
+          "chunk_index": 1
+        }
+      },
+      {
+        "chunk_id": "POL-EXP-002:recursive:001:3ac2515d",
+        "document_id": "POL-EXP-002",
+        "text": "ilegibles, duplicados o fuera de plazo. Cuando el gasto se realizó en moneda extranjera, debe informarse el tipo de cambio aplicado y adjuntarse el resumen correspondiente.",
+        "source": "politica_gastos.md",
+        "page": 1,
+        "metadata": {
+          "topic": "gastos",
+          "department": "Finanzas",
+          "active": true,
+          "version": "2026.2",
+          "chunk_strategy": "recursive",
+          "chunk_index": 1
+        }
+      },
+      {
+        "chunk_id": "POL-SEC-003:recursive:000:8dd616f6",
+        "document_id": "POL-SEC-003",
+        "text": "Las credenciales personales no deben compartirse por correo, chat ni documentos. Ante sospecha de exposición, la persona debe cambiar la clave, revocar las sesiones activas y abrir inmediatamente un incidente de seguridad.",
+        "source": "politica_seguridad.md",
+        "page": 2,
+        "metadata": {
+          "topic": "seguridad",
+          "department": "Tecnología",
+          "active": true,
+          "version": "2026.1",
+          "chunk_strategy": "recursive",
+          "chunk_index": 0
+        }
+      },
+      {
+        "chunk_id": "POL-SEC-003:recursive:001:b6ee93f8",
+        "document_id": "POL-SEC-003",
+        "text": "abrir inmediatamente un incidente de seguridad. El incidente debe incluir el sistema afectado, el horario aproximado y el canal por el que pudo haberse expuesto la credencial. Seguridad puede solicitar información adicional y debe confirmar el cierre del incidente.",
+        "source": "politica_seguridad.md",
+        "page": 2,
+        "metadata": {
+          "topic": "seguridad",
+          "department": "Tecnología",
+          "active": true,
+          "version": "2026.1",
+          "chunk_strategy": "recursive",
+          "chunk_index": 1
+        }
+      },
+      {
+        "chunk_id": "POL-BEN-007:recursive:000:74c98ad3",
+        "document_id": "POL-BEN-007",
+        "text": "La empresa reintegra cursos aprobados previamente por el líder. La solicitud debe incluir programa, costo y relación con el rol. El reintegro se presenta dentro de los 30 días posteriores a la finalización.",
+        "source": "beneficio_capacitacion.json",
+        "page": 1,
+        "metadata": {
+          "topic": "capacitación",
+          "department": "RRHH",
+          "active": true,
+          "version": "2026.1",
+          "chunk_strategy": "recursive",
+          "chunk_index": 0
+        }
+      },
+      {
+        "chunk_id": "FAQ-RRHH-005:recursive:000:8127fc62",
+        "document_id": "FAQ-RRHH-005",
+        "text": "# Preguntas frecuentes de RRHH Para pedir vacaciones, registrá la solicitud con 15 días corridos de anticipación. La carga no equivale a aprobación: el líder revisa cobertura y confirma la decisión. Para modificar una solicitud aprobada, cancelá la fecha original y generá una nueva solicitud.",
+        "source": "faq_rrhh.md",
+        "page": 1,
+        "metadata": {
+          "topic": "vacaciones",
+          "department": "RRHH",
+          "active": true,
+          "version": "2026.1",
+          "chunk_strategy": "recursive",
+          "chunk_index": 0
+        }
+      },
+      {
+        "chunk_id": "POL-MTG-008:recursive:000:0a8a8983",
+        "document_id": "POL-MTG-008",
+        "text": "Politica de reuniones Las reuniones de mas de 30 minutos deben incluir agenda y objetivo. La persona convocante registra decisiones y responsables al finalizar.",
+        "source": "politica_reuniones.pdf",
+        "page": 1,
+        "metadata": {
+          "topic": "reuniones",
+          "department": "Operaciones",
+          "active": true,
+          "version": "2026.1",
+          "chunk_strategy": "recursive",
+          "chunk_index": 0
+        }
+      },
+      {
+        "chunk_id": "INC-SEC-006:recursive:000:db0b5e7d",
+        "document_id": "INC-SEC-006",
+        "text": "Si se expone una credencial, cambiá la contraseña, revocá sesiones activas y abrí inmediatamente un incidente de seguridad. Informá sistema, horario y canal de exposición.",
+        "source": "respuesta_incidentes.txt",
+        "page": 1,
+        "metadata": {
+          "topic": "seguridad",
+          "department": "Tecnología",
+          "active": true,
+          "version": "2026.1",
+          "chunk_strategy": "recursive",
+          "chunk_index": 0
+        }
+      },
+      {
+        "chunk_id": "POL-REM-004:recursive:000:3ba7329a",
+        "document_id": "POL-REM-004",
+        "text": "El trabajo remoto requiere acuerdo previo con el líder, registro en la herramienta interna y disponibilidad durante el horario acordado. Los cambios permanentes requieren una nueva validación de RRHH.",
+        "source": "politica_trabajo_remoto.md",
+        "page": 1,
+        "metadata": {
+          "topic": "trabajo remoto",
+          "department": "RRHH",
+          "active": true,
+          "version": "2026.2",
+          "chunk_strategy": "recursive",
+          "chunk_index": 0
+        }
+      }
+    ],
+    "golden_dataset": [
+      {
+        "case_id": "VAC-01",
+        "query": "¿con cuánta anticipación pido vacaciones?",
+        "relevant_document_ids": [
+          "POL-VAC-001",
+          "FAQ-RRHH-005"
+        ],
+        "category": "vacaciones",
+        "expects_evidence": true
+      },
+      {
+        "case_id": "EXP-01",
+        "query": "¿cuál es el plazo para presentar un reintegro?",
+        "relevant_document_ids": [
+          "POL-EXP-002"
+        ],
+        "category": "gastos",
+        "expects_evidence": true
+      },
+      {
+        "case_id": "SEC-01",
+        "query": "expuse mi contraseña, ¿qué acciones debo tomar?",
+        "relevant_document_ids": [
+          "POL-SEC-003",
+          "INC-SEC-006"
+        ],
+        "category": "seguridad",
+        "expects_evidence": true
+      },
+      {
+        "case_id": "REM-01",
+        "query": "¿cómo se registra el trabajo remoto?",
+        "relevant_document_ids": [
+          "POL-REM-004"
+        ],
+        "category": "trabajo remoto",
+        "expects_evidence": true
+      },
+      {
+        "case_id": "CAP-01",
+        "query": "¿qué necesito para pedir reintegro de una capacitación?",
+        "relevant_document_ids": [
+          "POL-BEN-007"
+        ],
+        "category": "capacitación",
+        "expects_evidence": true
+      },
+      {
+        "case_id": "NONE-01",
+        "query": "¿la empresa ofrece estacionamiento gratuito?",
+        "relevant_document_ids": [],
+        "category": "sin evidencia",
+        "expects_evidence": false
+      }
+    ]
+  },
+  "continuity": {
+    "increment": "ingesta, filtros y evaluación de retrieval",
+    "next_class": 7
+  }
+}

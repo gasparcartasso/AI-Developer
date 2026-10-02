@@ -1,0 +1,80 @@
+{
+  "class": 3,
+  "mode": "real",
+  "model": "gemini-3.1-flash-lite",
+  "configuration": {
+    "app_env": "development",
+    "use_real_gemini": true,
+    "default_model": "gemini-3.1-flash-lite",
+    "request_timeout_seconds": 20.0,
+    "max_retries": 2,
+    "retry_base_delay_seconds": 0.25,
+    "max_concurrency": 3,
+    "history_max_turns": 6,
+    "input_usd_per_million": 0.25,
+    "output_usd_per_million": 1.5,
+    "gemini_api_key": "***configurada***"
+  },
+  "pedagogical_pattern": "understand_test_persist_import_verify",
+  "modules_created": [
+    "settings.py",
+    "errors.py",
+    "providers.py",
+    "resilience.py",
+    "conversation.py",
+    "runtime.py",
+    "app.py"
+  ],
+  "concurrency_experiment": {
+    "sequential_ms": 487.1,
+    "concurrent_ms": 163.3,
+    "max_concurrency": 3,
+    "observed_speedup": 2.98
+  },
+  "retry_demo": {
+    "attempts": 2,
+    "retries": [
+      {
+        "attempt": 1,
+        "error_type": "RateLimitError",
+        "message": "429 simulado: demasiadas solicitudes",
+        "next_delay_seconds": 0.01
+      }
+    ]
+  },
+  "streaming_demo": {
+    "chunks": 11,
+    "first_chunk_ms": 10.6,
+    "total_ms": 121.4
+  },
+  "conversation_demo": {
+    "session_id": 4,
+    "runs": 2,
+    "messages": 4,
+    "trace_events": 5
+  },
+  "tests": [
+    {
+      "test": "provider_contract",
+      "status": "PASS"
+    },
+    {
+      "test": "retry_transient",
+      "status": "PASS"
+    },
+    {
+      "test": "async_mock",
+      "status": "PASS"
+    },
+    {
+      "test": "history_window",
+      "status": "PASS"
+    }
+  ],
+  "student_decision": {
+    "improvement": "separar user_id de session_id",
+    "reason": "mejora la gestión de identificadores",
+    "test_added": " ",
+    "tradeoff": ""
+  }
+}

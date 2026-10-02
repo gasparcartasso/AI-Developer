@@ -1,0 +1,47 @@
+[
+  {
+    "thread_id": "thr_001",
+    "subject": "Error al cargar facturas en el portal",
+    "from": "maria.gomez@cliente-demo.com",
+    "labels": [
+      "INBOX",
+      "soporte"
+    ],
+    "messages": [
+      {
+        "role": "customer",
+        "body": "No podemos cargar facturas. El botón queda girando y bloquea el cierre mensual."
+      }
+    ]
+  },
+  {
+    "thread_id": "thr_002",
+    "subject": "Consulta sobre cambio de contraseña",
+    "from": "juan.perez@cliente-demo.com",
+    "labels": [
+      "INBOX",
+      "soporte"
+    ],
+    "messages": [
+      {
+        "role": "customer",
+        "body": "¿Cómo cambio mi contraseña? No veo la opción."
+      }
+    ]
+  },
+  {
+    "thread_id": "thr_003",
+    "subject": "Pedido de integración con sistema contable",
+    "from": "laura.rivas@cliente-demo.com",
+    "labels": [
+      "INBOX",
+      "ventas"
+    ],
+    "messages": [
+      {
+        "role": "customer",
+        "body": "Queremos integrar con nuestro sistema contable. ¿Tienen API?"
+      }
+    ]
+  }
+]

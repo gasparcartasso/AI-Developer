@@ -1,0 +1,50 @@
+[
+  {
+    "document_id": "POL-VAC-001",
+    "source": "politica_vacaciones.md",
+    "page": 1,
+    "text": "Las solicitudes de vacaciones deben registrarse en la herramienta de RRHH con al menos 15 días corridos de anticipación. La carga inicia el circuito de revisión, pero no implica aprobación automática. El líder directo valida la cobertura operativa y las fechas solicitadas. Si existe una urgencia, la persona debe documentar la excepción y solicitar aprobación explícita del líder y de RRHH. Una solicitud ya aprobada puede modificarse únicamente cancelando las fechas originales y creando una nueva solicitud.",
+    "metadata": {
+      "topic": "vacaciones",
+      "department": "RRHH",
+      "active": true,
+      "version": "2026.1"
+    }
+  },
+  {
+    "document_id": "POL-EXP-002",
+    "source": "politica_gastos.md",
+    "page": 1,
+    "text": "Los reintegros de gastos deben presentarse con comprobante fiscal válido y una descripción del motivo. El plazo máximo es de 30 días corridos desde la fecha del gasto. Finanzas puede rechazar comprobantes ilegibles, duplicados o fuera de plazo. Cuando el gasto se realizó en moneda extranjera, debe informarse el tipo de cambio aplicado y adjuntarse el resumen correspondiente.",
+    "metadata": {
+      "topic": "gastos",
+      "department": "Finanzas",
+      "active": true,
+      "version": "2026.2"
+    }
+  },
+  {
+    "document_id": "POL-SEC-003",
+    "source": "politica_seguridad.md",
+    "page": 2,
+    "text": "Las credenciales personales no deben compartirse por correo, chat ni documentos. Ante sospecha de exposición, la persona debe cambiar la clave, revocar las sesiones activas y abrir inmediatamente un incidente de seguridad. El incidente debe incluir el sistema afectado, el horario aproximado y el canal por el que pudo haberse expuesto la credencial. Seguridad puede solicitar información adicional y debe confirmar el cierre del incidente.",
+    "metadata": {
+      "topic": "seguridad",
+      "department": "Tecnología",
+      "active": true,
+      "version": "2026.1"
+    }
+  },
+  {
+    "document_id": "POL-REM-004",
+    "source": "politica_trabajo_remoto.md",
+    "page": 1,
+    "text": "El trabajo remoto requiere acuerdo previo con el líder y registro en la herramienta interna. Cada equipo define días de presencialidad según sus necesidades operativas. Durante la jornada remota la persona debe permanecer disponible en los canales acordados y cumplir las medidas de seguridad. El acuerdo puede revisarse cuando cambian las funciones, el equipo o las condiciones operativas.",
+    "metadata": {
+      "topic": "trabajo remoto",
+      "department": "RRHH",
+      "active": true,
+      "version": "2026.1"
+    }
+  }
+]

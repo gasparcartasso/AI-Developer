@@ -1,0 +1,11 @@
+{
+  "chunking": {
+    "chunk_size_words": 70,
+    "overlap_words": 0
+  },
+  "retrieval": {
+    "top_k": 3,
+    "filters": {},
+    "score_threshold": null
+  }
+}
