@@ -1,0 +1,382 @@
+{
+  "run-bae36d08-d04c-430f-ae1b-a1c1e0df1343": {
+    "version": 6,
+    "state": {
+      "run_id": "run-bae36d08-d04c-430f-ae1b-a1c1e0df1343",
+      "thread_id": "email-thread-c11",
+      "user_message": "Preparar una respuesta y enviarla cuando esté aprobada.",
+      "context_capsule": {
+        "selected_skill": {
+          "selected": "support-email-triage",
+          "reason": "selected",
+          "candidates": [
+            {
+              "name": "support-email-triage",
+              "version": "1.0.0",
+              "description": "Analiza emails y threads de soporte, identifica riesgo, busca evidencia interna y prepara una respuesta trazable. Usar para soporte, email, thread, incidentes técnicos, portal, facturas o contraseñas.",
+              "score": 4,
+              "matched_positive": [
+                "factura",
+                "portal"
+              ],
+              "matched_negative": []
+            }
+          ],
+          "version": "1.0.0",
+          "resource_loaded": "references/triage-checklist.md"
+        },
+        "session2_memory": [
+          {
+            "memory_id": "mem_377453547366",
+            "user_id": "user_sessions_demo",
+            "project_id": "support-case",
+            "course_id": "ai-agent-dev",
+            "session_id": "",
+            "kind": "preference",
+            "key": "response_style",
+            "source": "explicit_user_statement",
+            "confidence": 1.0,
+            "priority": 8,
+            "created_at": "2026-10-06T07:03:40.892433+00:00",
+            "updated_at": "2026-10-06T07:03:40.892433+00:00",
+            "expires_at": null,
+            "supersedes": null,
+            "status": "active",
+            "value": {
+              "length": "breve",
+              "format": "pasos numerados"
+            },
+            "retrieve_score": 11.8
+          }
+        ],
+        "conversation_summary": "Resumen acumulado:\n- [objective] user: Necesito resolver el incidente de facturas antes del cierre mensual.\n- [decision] assistant: Vamos a buscar procedimiento interno y confirmar impacto.\n- [fact] user: Afecta a tres usuarios y ocurre en Chrome y Edge.\n- [pending] assistant: Falta horario aproximado del incidente.\n- [constraint] user: No envíes ningún email; solo prepará un draft.",
+        "preparation_trace": [
+          {
+            "step": 1,
+            "selected_skill": "support-email-triage",
+            "skill_version": "1.0.0",
+            "memory_ids": [
+              "mem_377453547366"
+            ],
+            "context_items": [
+              "Policies",
+              "Current request",
+              "Selected Skill",
+              "Relevant Memory",
+              "Recent messages",
+              "On-demand Skill resource"
+            ],
+            "used_input_tokens": 408,
+            "dropped": []
+          },
+          {
+            "step": 2,
+            "selected_skill": "support-email-triage",
+            "skill_version": "1.0.0",
+            "memory_ids": [
+              "mem_377453547366"
+            ],
+            "context_items": [
+              "Policies",
+              "Current request",
+              "Selected Skill",
+              "Tool evidence",
+              "Relevant Memory",
+              "Recent messages",
+              "On-demand Skill resource"
+            ],
+            "used_input_tokens": 558,
+            "dropped": []
+          }
+        ],
+        "agent_stop_reason": "final_answer"
+      },
+      "status": "completed",
+      "pending_action": {
+        "action_id": "act-e4dbd555-4971-43b2-b360-dcc1278a23a2",
+        "tool_name": "publish_notification",
+        "args": {
+          "recipient": "cliente@example.com",
+          "subject": "Seguimiento del caso",
+          "body": "Hola, revisamos tu caso. Necesitamos un dato adicional antes de cerrarlo."
+        },
+        "rationale": "El caso necesita una comunicación externa con información ya revisada.",
+        "evidence_used": [
+          "thread de soporte",
+          "guía interna"
+        ],
+        "risk_level": "high",
+        "version": 2,
+        "args_hash": "384e1a4c2beebd83acf43705987f45a0cb62b2fb18ea64c0a7f82e6ac6152eb1",
+        "idempotency_key": "publish_notification:act-e4dbd555-4971-43b2-b360-dcc1278a23a2:v2:384e1a4c2beebd83acf43705987f45a0cb62b2fb18ea64c0a7f82e6ac6152eb1"
+      },
+      "last_decision": {
+        "decision": "approve",
+        "actor": "reviewer-01",
+        "action_id": "act-e4dbd555-4971-43b2-b360-dcc1278a23a2",
+        "proposal_version": 2,
+        "args_hash": "384e1a4c2beebd83acf43705987f45a0cb62b2fb18ea64c0a7f82e6ac6152eb1",
+        "edited_args": null,
+        "comment": "Contenido aprobado."
+      },
+      "result": {
+        "external_id": "ext-f47d607d-26f6-48f6-8d11-2f7ee4c25cea",
+        "idempotency_key": "publish_notification:act-e4dbd555-4971-43b2-b360-dcc1278a23a2:v2:384e1a4c2beebd83acf43705987f45a0cb62b2fb18ea64c0a7f82e6ac6152eb1",
+        "action_id": "act-e4dbd555-4971-43b2-b360-dcc1278a23a2",
+        "args_hash": "384e1a4c2beebd83acf43705987f45a0cb62b2fb18ea64c0a7f82e6ac6152eb1",
+        "status": "completed",
+        "deduplicated": false
+      },
+      "checkpoint_version": 6,
+      "events": [
+        {
+          "event_id": "evt-1a955df1-1873-4c83-91a9-f6d82352f44e",
+          "event": "approval_requested",
+          "timestamp": "2026-10-20T06:59:58.792766+00:00",
+          "action_id": "act-e4dbd555-4971-43b2-b360-dcc1278a23a2",
+          "proposal_version": 1,
+          "args_hash": "772c0e3381d72c1f9ab37d0d7af2b2a45ea1691f5af16762bc29d818c4af335c",
+          "risk_level": "high"
+        },
+        {
+          "event_id": "evt-fc71d30b-9eb6-4e0f-bfd7-48b5c4e481c7",
+          "event": "human_decision",
+          "timestamp": "2026-10-20T07:00:08.318331+00:00",
+          "decision": "edit",
+          "actor": "reviewer-01",
+          "action_id": "act-e4dbd555-4971-43b2-b360-dcc1278a23a2",
+          "proposal_version": 1,
+          "args_hash": "772c0e3381d72c1f9ab37d0d7af2b2a45ea1691f5af16762bc29d818c4af335c",
+          "comment": "Ajustar el mensaje para no afirmar que el caso ya está resuelto."
+        },
+        {
+          "event_id": "evt-3aa96774-58da-4964-943f-8f3ea1112734",
+          "event": "proposal_edited",
+          "timestamp": "2026-10-20T07:00:08.318406+00:00",
+          "action_id": "act-e4dbd555-4971-43b2-b360-dcc1278a23a2",
+          "old_version": 1,
+          "new_version": 2,
+          "args_hash": "384e1a4c2beebd83acf43705987f45a0cb62b2fb18ea64c0a7f82e6ac6152eb1"
+        },
+        {
+          "event_id": "evt-1d17bad1-aaea-4da3-b4fd-aa6c1da0a984",
+          "event": "human_decision",
+          "timestamp": "2026-10-20T07:00:32.938744+00:00",
+          "decision": "approve",
+          "actor": "reviewer-01",
+          "action_id": "act-e4dbd555-4971-43b2-b360-dcc1278a23a2",
+          "proposal_version": 2,
+          "args_hash": "384e1a4c2beebd83acf43705987f45a0cb62b2fb18ea64c0a7f82e6ac6152eb1",
+          "comment": "Contenido aprobado."
+        },
+        {
+          "event_id": "evt-78daca21-7c28-487e-936d-4270bc77d347",
+          "event": "policy_authorized",
+          "timestamp": "2026-10-20T07:00:41.877487+00:00",
+          "action_id": "act-e4dbd555-4971-43b2-b360-dcc1278a23a2",
+          "validated_args_hash": "384e1a4c2beebd83acf43705987f45a0cb62b2fb18ea64c0a7f82e6ac6152eb1"
+        },
+        {
+          "event_id": "evt-209a78c7-34dd-4458-a966-a48fd68867cb",
+          "event": "execution_started",
+          "timestamp": "2026-10-20T07:01:20.581518+00:00",
+          "action_id": "act-e4dbd555-4971-43b2-b360-dcc1278a23a2",
+          "idempotency_key": "publish_notification:act-e4dbd555-4971-43b2-b360-dcc1278a23a2:v2:384e1a4c2beebd83acf43705987f45a0cb62b2fb18ea64c0a7f82e6ac6152eb1",
+          "proposal_version": 2
+        },
+        {
+          "event_id": "evt-da0d2c69-0878-4636-8fea-e2c820a0f439",
+          "event": "execution_result",
+          "timestamp": "2026-10-20T07:01:20.584299+00:00",
+          "outcome": "completed",
+          "external_id": "ext-f47d607d-26f6-48f6-8d11-2f7ee4c25cea",
+          "deduplicated": false
+        }
+      ]
+    }
+  },
+  "run-27805ae9-ac39-422a-9afa-ae3060003439": {
+    "version": 4,
+    "state": {
+      "run_id": "run-27805ae9-ac39-422a-9afa-ae3060003439",
+      "thread_id": "policy-demo-thread",
+      "user_message": "Preparar una notificación externa.",
+      "context_capsule": {},
+      "status": "failed",
+      "pending_action": {
+        "action_id": "act-2f7eec8e-6a11-4441-9c95-c185fc017627",
+        "tool_name": "publish_notification",
+        "args": {
+          "recipient": "externo@otro-dominio.com",
+          "subject": "Aviso",
+          "body": "Mensaje inicial para revisión."
+        },
+        "rationale": "Notificar una actualización.",
+        "evidence_used": [
+          "caso demo"
+        ],
+        "risk_level": "high",
+        "version": 2,
+        "args_hash": "7746a9c0394f7694e1257a948d055322e8e66a83f927a5e96b5b6a9159d8e0a2",
+        "idempotency_key": "publish_notification:act-2f7eec8e-6a11-4441-9c95-c185fc017627:v2:7746a9c0394f7694e1257a948d055322e8e66a83f927a5e96b5b6a9159d8e0a2"
+      },
+      "last_decision": {
+        "decision": "approve",
+        "actor": "reviewer-02",
+        "action_id": "act-2f7eec8e-6a11-4441-9c95-c185fc017627",
+        "proposal_version": 2,
+        "args_hash": "7746a9c0394f7694e1257a948d055322e8e66a83f927a5e96b5b6a9159d8e0a2",
+        "edited_args": null,
+        "comment": ""
+      },
+      "result": null,
+      "checkpoint_version": 4,
+      "events": [
+        {
+          "event_id": "evt-05b46647-9704-4e40-81fd-253aad690414",
+          "event": "approval_requested",
+          "timestamp": "2026-10-20T07:00:47.951291+00:00",
+          "action_id": "act-2f7eec8e-6a11-4441-9c95-c185fc017627",
+          "proposal_version": 1,
+          "args_hash": "653476817728bf6a03c72e91de844519ba95010ed7c54b5215953282f0f6bf91",
+          "risk_level": "high"
+        },
+        {
+          "event_id": "evt-bf3132ae-656b-4c77-9b65-fd02168e05ca",
+          "event": "human_decision",
+          "timestamp": "2026-10-20T07:00:47.952645+00:00",
+          "decision": "edit",
+          "actor": "reviewer-02",
+          "action_id": "act-2f7eec8e-6a11-4441-9c95-c185fc017627",
+          "proposal_version": 1,
+          "args_hash": "653476817728bf6a03c72e91de844519ba95010ed7c54b5215953282f0f6bf91",
+          "comment": ""
+        },
+        {
+          "event_id": "evt-0ab9607c-7ef6-4a54-9011-0b5ecb5f150a",
+          "event": "proposal_edited",
+          "timestamp": "2026-10-20T07:00:47.952697+00:00",
+          "action_id": "act-2f7eec8e-6a11-4441-9c95-c185fc017627",
+          "old_version": 1,
+          "new_version": 2,
+          "args_hash": "7746a9c0394f7694e1257a948d055322e8e66a83f927a5e96b5b6a9159d8e0a2"
+        },
+        {
+          "event_id": "evt-b3416bc3-023f-4ed4-9239-5b321f69d02d",
+          "event": "human_decision",
+          "timestamp": "2026-10-20T07:00:47.953372+00:00",
+          "decision": "approve",
+          "actor": "reviewer-02",
+          "action_id": "act-2f7eec8e-6a11-4441-9c95-c185fc017627",
+          "proposal_version": 2,
+          "args_hash": "7746a9c0394f7694e1257a948d055322e8e66a83f927a5e96b5b6a9159d8e0a2",
+          "comment": ""
+        },
+        {
+          "event_id": "evt-0c96a519-fa38-4107-9f52-faebae9dd36f",
+          "event": "policy_denied",
+          "timestamp": "2026-10-20T07:00:47.953837+00:00",
+          "reason": "El destinatario está fuera del dominio permitido por esta demo."
+        }
+      ]
+    }
+  },
+  "run-b7689e61-0188-4b3a-ab84-20e6ce6e9e6e": {
+    "version": 6,
+    "state": {
+      "run_id": "run-b7689e61-0188-4b3a-ab84-20e6ce6e9e6e",
+      "thread_id": "recovery-thread",
+      "user_message": "Publicar actualización sensible.",
+      "context_capsule": {},
+      "status": "completed",
+      "pending_action": {
+        "action_id": "act-970716af-edc4-49a4-a080-a2db2beebb48",
+        "tool_name": "publish_notification",
+        "args": {
+          "recipient": "cliente@example.com",
+          "subject": "Actualización",
+          "body": "Tu caso fue actualizado."
+        },
+        "rationale": "Comunicar un cambio confirmado.",
+        "evidence_used": [
+          "evento confirmado"
+        ],
+        "risk_level": "high",
+        "version": 1,
+        "args_hash": "7b7e9988e3fe09e3d81c1f55f3a258cfa41e4034aec47b425dc8e4af9c279140",
+        "idempotency_key": "publish_notification:act-970716af-edc4-49a4-a080-a2db2beebb48:v1:7b7e9988e3fe09e3d81c1f55f3a258cfa41e4034aec47b425dc8e4af9c279140"
+      },
+      "last_decision": {
+        "decision": "approve",
+        "actor": "reviewer-03",
+        "action_id": "act-970716af-edc4-49a4-a080-a2db2beebb48",
+        "proposal_version": 1,
+        "args_hash": "7b7e9988e3fe09e3d81c1f55f3a258cfa41e4034aec47b425dc8e4af9c279140",
+        "edited_args": null,
+        "comment": ""
+      },
+      "result": {
+        "external_id": "ext-c8f0d6e2-993b-44d2-aaa4-9b1c3deec38c",
+        "idempotency_key": "publish_notification:act-970716af-edc4-49a4-a080-a2db2beebb48:v1:7b7e9988e3fe09e3d81c1f55f3a258cfa41e4034aec47b425dc8e4af9c279140",
+        "action_id": "act-970716af-edc4-49a4-a080-a2db2beebb48",
+        "args_hash": "7b7e9988e3fe09e3d81c1f55f3a258cfa41e4034aec47b425dc8e4af9c279140",
+        "status": "completed",
+        "deduplicated": false
+      },
+      "checkpoint_version": 6,
+      "events": [
+        {
+          "event_id": "evt-1d13b2a7-7736-43de-a82c-0de2cfd1cb63",
+          "event": "approval_requested",
+          "timestamp": "2026-10-20T07:01:27.563693+00:00",
+          "action_id": "act-970716af-edc4-49a4-a080-a2db2beebb48",
+          "proposal_version": 1,
+          "args_hash": "7b7e9988e3fe09e3d81c1f55f3a258cfa41e4034aec47b425dc8e4af9c279140",
+          "risk_level": "high"
+        },
+        {
+          "event_id": "evt-493215dd-eed7-41ab-b1ef-cfa86c7f79cf",
+          "event": "human_decision",
+          "timestamp": "2026-10-20T07:01:27.565164+00:00",
+          "decision": "approve",
+          "actor": "reviewer-03",
+          "action_id": "act-970716af-edc4-49a4-a080-a2db2beebb48",
+          "proposal_version": 1,
+          "args_hash": "7b7e9988e3fe09e3d81c1f55f3a258cfa41e4034aec47b425dc8e4af9c279140",
+          "comment": ""
+        },
+        {
+          "event_id": "evt-8c52eaa9-0816-4ec3-8793-b21557a325d2",
+          "event": "policy_authorized",
+          "timestamp": "2026-10-20T07:01:27.566182+00:00",
+          "action_id": "act-970716af-edc4-49a4-a080-a2db2beebb48",
+          "validated_args_hash": "7b7e9988e3fe09e3d81c1f55f3a258cfa41e4034aec47b425dc8e4af9c279140"
+        },
+        {
+          "event_id": "evt-39ce6a39-6b7e-41b1-aa77-b275ee861c3e",
+          "event": "execution_started",
+          "timestamp": "2026-10-20T07:01:27.567310+00:00",
+          "action_id": "act-970716af-edc4-49a4-a080-a2db2beebb48",
+          "idempotency_key": "publish_notification:act-970716af-edc4-49a4-a080-a2db2beebb48:v1:7b7e9988e3fe09e3d81c1f55f3a258cfa41e4034aec47b425dc8e4af9c279140",
+          "proposal_version": 1
+        },
+        {
+          "event_id": "evt-5fb36c11-61d6-4636-8897-fe453cb321a4",
+          "event": "execution_unknown",
+          "timestamp": "2026-10-20T07:01:27.568806+00:00",
+          "action_id": "act-970716af-edc4-49a4-a080-a2db2beebb48",
+          "idempotency_key": "publish_notification:act-970716af-edc4-49a4-a080-a2db2beebb48:v1:7b7e9988e3fe09e3d81c1f55f3a258cfa41e4034aec47b425dc8e4af9c279140",
+          "error": "El sistema externo completó, pero la respuesta se perdió."
+        },
+        {
+          "event_id": "evt-cda2a56c-4ec3-4420-b364-6f957803eb84",
+          "event": "external_status",
+          "timestamp": "2026-10-20T07:01:27.570754+00:00",
+          "idempotency_key": "publish_notification:act-970716af-edc4-49a4-a080-a2db2beebb48:v1:7b7e9988e3fe09e3d81c1f55f3a258cfa41e4034aec47b425dc8e4af9c279140",
+          "status": "completed",
+          "external_id": "ext-c8f0d6e2-993b-44d2-aaa4-9b1c3deec38c"
+        }
+      ]
+    }
+  }
+}

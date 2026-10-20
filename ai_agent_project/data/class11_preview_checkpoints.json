@@ -1,0 +1,13 @@
+{
+  "e42523e8-7c6f-4356-afed-d5c7d39783df": {
+    "version": 2,
+    "state": {
+      "run_id": "e42523e8-7c6f-4356-afed-d5c7d39783df",
+      "thread_id": "thread-2313249a-cd95-49e4-8a3e-c8a4504b301b",
+      "status": "waiting_for_approval",
+      "pending_action": null,
+      "checkpoint_version": 2,
+      "events": []
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "publish_notification:act-e4dbd555-4971-43b2-b360-dcc1278a23a2:v2:384e1a4c2beebd83acf43705987f45a0cb62b2fb18ea64c0a7f82e6ac6152eb1": {
+    "external_id": "ext-f47d607d-26f6-48f6-8d11-2f7ee4c25cea",
+    "idempotency_key": "publish_notification:act-e4dbd555-4971-43b2-b360-dcc1278a23a2:v2:384e1a4c2beebd83acf43705987f45a0cb62b2fb18ea64c0a7f82e6ac6152eb1",
+    "action_id": "act-e4dbd555-4971-43b2-b360-dcc1278a23a2",
+    "args_hash": "384e1a4c2beebd83acf43705987f45a0cb62b2fb18ea64c0a7f82e6ac6152eb1",
+    "status": "completed",
+    "deduplicated": false
+  },
+  "publish_notification:act-970716af-edc4-49a4-a080-a2db2beebb48:v1:7b7e9988e3fe09e3d81c1f55f3a258cfa41e4034aec47b425dc8e4af9c279140": {
+    "external_id": "ext-c8f0d6e2-993b-44d2-aaa4-9b1c3deec38c",
+    "idempotency_key": "publish_notification:act-970716af-edc4-49a4-a080-a2db2beebb48:v1:7b7e9988e3fe09e3d81c1f55f3a258cfa41e4034aec47b425dc8e4af9c279140",
+    "action_id": "act-970716af-edc4-49a4-a080-a2db2beebb48",
+    "args_hash": "7b7e9988e3fe09e3d81c1f55f3a258cfa41e4034aec47b425dc8e4af9c279140",
+    "status": "completed",
+    "deduplicated": false
+  }
+}

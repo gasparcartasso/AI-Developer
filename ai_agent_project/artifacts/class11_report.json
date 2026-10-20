@@ -1,0 +1,991 @@
+{
+  "class": 11,
+  "case_study": {
+    "name": "agente de gestión asistida de emails",
+    "stage": "state_checkpoint_hitl",
+    "summary": "Workflow durable con State explícito, checkpoint versionado, HITL, reautorización, idempotencia, recovery y LangGraph."
+  },
+  "handoff_from_class10": {
+    "class": 10,
+    "increment": "Skills + progressive disclosure + Context Builder + persistent Memory lifecycle",
+    "context_capsule": {
+      "selected_skill": {
+        "selected": "support-email-triage",
+        "reason": "selected",
+        "candidates": [
+          {
+            "name": "support-email-triage",
+            "version": "1.0.0",
+            "description": "Analiza emails y threads de soporte, identifica riesgo, busca evidencia interna y prepara una respuesta trazable. Usar para soporte, email, thread, incidentes técnicos, portal, facturas o contraseñas.",
+            "score": 4,
+            "matched_positive": [
+              "factura",
+              "portal"
+            ],
+            "matched_negative": []
+          }
+        ],
+        "version": "1.0.0",
+        "resource_loaded": "references/triage-checklist.md"
+      },
+      "session2_memory": [
+        {
+          "memory_id": "mem_377453547366",
+          "user_id": "user_sessions_demo",
+          "project_id": "support-case",
+          "course_id": "ai-agent-dev",
+          "session_id": "",
+          "kind": "preference",
+          "key": "response_style",
+          "source": "explicit_user_statement",
+          "confidence": 1.0,
+          "priority": 8,
+          "created_at": "2026-10-06T07:03:40.892433+00:00",
+          "updated_at": "2026-10-06T07:03:40.892433+00:00",
+          "expires_at": null,
+          "supersedes": null,
+          "status": "active",
+          "value": {
+            "length": "breve",
+            "format": "pasos numerados"
+          },
+          "retrieve_score": 11.8
+        }
+      ],
+      "conversation_summary": "Resumen acumulado:\n- [objective] user: Necesito resolver el incidente de facturas antes del cierre mensual.\n- [decision] assistant: Vamos a buscar procedimiento interno y confirmar impacto.\n- [fact] user: Afecta a tres usuarios y ocurre en Chrome y Edge.\n- [pending] assistant: Falta horario aproximado del incidente.\n- [constraint] user: No envíes ningún email; solo prepará un draft.",
+      "preparation_trace": [
+        {
+          "step": 1,
+          "selected_skill": "support-email-triage",
+          "skill_version": "1.0.0",
+          "memory_ids": [
+            "mem_377453547366"
+          ],
+          "context_items": [
+            "Policies",
+            "Current request",
+            "Selected Skill",
+            "Relevant Memory",
+            "Recent messages",
+            "On-demand Skill resource"
+          ],
+          "used_input_tokens": 408,
+          "dropped": []
+        },
+        {
+          "step": 2,
+          "selected_skill": "support-email-triage",
+          "skill_version": "1.0.0",
+          "memory_ids": [
+            "mem_377453547366"
+          ],
+          "context_items": [
+            "Policies",
+            "Current request",
+            "Selected Skill",
+            "Tool evidence",
+            "Relevant Memory",
+            "Recent messages",
+            "On-demand Skill resource"
+          ],
+          "used_input_tokens": 558,
+          "dropped": []
+        }
+      ],
+      "agent_stop_reason": "final_answer"
+    }
+  },
+  "manual_workflow": {
+    "completed_state": {
+      "run_id": "run-bae36d08-d04c-430f-ae1b-a1c1e0df1343",
+      "thread_id": "email-thread-c11",
+      "user_message": "Preparar una respuesta y enviarla cuando esté aprobada.",
+      "context_capsule": {
+        "selected_skill": {
+          "selected": "support-email-triage",
+          "reason": "selected",
+          "candidates": [
+            {
+              "name": "support-email-triage",
+              "version": "1.0.0",
+              "description": "Analiza emails y threads de soporte, identifica riesgo, busca evidencia interna y prepara una respuesta trazable. Usar para soporte, email, thread, incidentes técnicos, portal, facturas o contraseñas.",
+              "score": 4,
+              "matched_positive": [
+                "factura",
+                "portal"
+              ],
+              "matched_negative": []
+            }
+          ],
+          "version": "1.0.0",
+          "resource_loaded": "references/triage-checklist.md"
+        },
+        "session2_memory": [
+          {
+            "memory_id": "mem_377453547366",
+            "user_id": "user_sessions_demo",
+            "project_id": "support-case",
+            "course_id": "ai-agent-dev",
+            "session_id": "",
+            "kind": "preference",
+            "key": "response_style",
+            "source": "explicit_user_statement",
+            "confidence": 1.0,
+            "priority": 8,
+            "created_at": "2026-10-06T07:03:40.892433+00:00",
+            "updated_at": "2026-10-06T07:03:40.892433+00:00",
+            "expires_at": null,
+            "supersedes": null,
+            "status": "active",
+            "value": {
+              "length": "breve",
+              "format": "pasos numerados"
+            },
+            "retrieve_score": 11.8
+          }
+        ],
+        "conversation_summary": "Resumen acumulado:\n- [objective] user: Necesito resolver el incidente de facturas antes del cierre mensual.\n- [decision] assistant: Vamos a buscar procedimiento interno y confirmar impacto.\n- [fact] user: Afecta a tres usuarios y ocurre en Chrome y Edge.\n- [pending] assistant: Falta horario aproximado del incidente.\n- [constraint] user: No envíes ningún email; solo prepará un draft.",
+        "preparation_trace": [
+          {
+            "step": 1,
+            "selected_skill": "support-email-triage",
+            "skill_version": "1.0.0",
+            "memory_ids": [
+              "mem_377453547366"
+            ],
+            "context_items": [
+              "Policies",
+              "Current request",
+              "Selected Skill",
+              "Relevant Memory",
+              "Recent messages",
+              "On-demand Skill resource"
+            ],
+            "used_input_tokens": 408,
+            "dropped": []
+          },
+          {
+            "step": 2,
+            "selected_skill": "support-email-triage",
+            "skill_version": "1.0.0",
+            "memory_ids": [
+              "mem_377453547366"
+            ],
+            "context_items": [
+              "Policies",
+              "Current request",
+              "Selected Skill",
+              "Tool evidence",
+              "Relevant Memory",
+              "Recent messages",
+              "On-demand Skill resource"
+            ],
+            "used_input_tokens": 558,
+            "dropped": []
+          }
+        ],
+        "agent_stop_reason": "final_answer"
+      },
+      "status": "completed",
+      "pending_action": {
+        "action_id": "act-e4dbd555-4971-43b2-b360-dcc1278a23a2",
+        "tool_name": "publish_notification",
+        "args": {
+          "recipient": "cliente@example.com",
+          "subject": "Seguimiento del caso",
+          "body": "Hola, revisamos tu caso. Necesitamos un dato adicional antes de cerrarlo."
+        },
+        "rationale": "El caso necesita una comunicación externa con información ya revisada.",
+        "evidence_used": [
+          "thread de soporte",
+          "guía interna"
+        ],
+        "risk_level": "high",
+        "version": 2,
+        "args_hash": "384e1a4c2beebd83acf43705987f45a0cb62b2fb18ea64c0a7f82e6ac6152eb1",
+        "idempotency_key": "publish_notification:act-e4dbd555-4971-43b2-b360-dcc1278a23a2:v2:384e1a4c2beebd83acf43705987f45a0cb62b2fb18ea64c0a7f82e6ac6152eb1"
+      },
+      "last_decision": {
+        "decision": "approve",
+        "actor": "reviewer-01",
+        "action_id": "act-e4dbd555-4971-43b2-b360-dcc1278a23a2",
+        "proposal_version": 2,
+        "args_hash": "384e1a4c2beebd83acf43705987f45a0cb62b2fb18ea64c0a7f82e6ac6152eb1",
+        "edited_args": null,
+        "comment": "Contenido aprobado."
+      },
+      "result": {
+        "external_id": "ext-f47d607d-26f6-48f6-8d11-2f7ee4c25cea",
+        "idempotency_key": "publish_notification:act-e4dbd555-4971-43b2-b360-dcc1278a23a2:v2:384e1a4c2beebd83acf43705987f45a0cb62b2fb18ea64c0a7f82e6ac6152eb1",
+        "action_id": "act-e4dbd555-4971-43b2-b360-dcc1278a23a2",
+        "args_hash": "384e1a4c2beebd83acf43705987f45a0cb62b2fb18ea64c0a7f82e6ac6152eb1",
+        "status": "completed",
+        "deduplicated": false
+      },
+      "checkpoint_version": 6,
+      "events": [
+        {
+          "event_id": "evt-1a955df1-1873-4c83-91a9-f6d82352f44e",
+          "event": "approval_requested",
+          "timestamp": "2026-10-20T06:59:58.792766+00:00",
+          "action_id": "act-e4dbd555-4971-43b2-b360-dcc1278a23a2",
+          "proposal_version": 1,
+          "args_hash": "772c0e3381d72c1f9ab37d0d7af2b2a45ea1691f5af16762bc29d818c4af335c",
+          "risk_level": "high"
+        },
+        {
+          "event_id": "evt-fc71d30b-9eb6-4e0f-bfd7-48b5c4e481c7",
+          "event": "human_decision",
+          "timestamp": "2026-10-20T07:00:08.318331+00:00",
+          "decision": "edit",
+          "actor": "reviewer-01",
+          "action_id": "act-e4dbd555-4971-43b2-b360-dcc1278a23a2",
+          "proposal_version": 1,
+          "args_hash": "772c0e3381d72c1f9ab37d0d7af2b2a45ea1691f5af16762bc29d818c4af335c",
+          "comment": "Ajustar el mensaje para no afirmar que el caso ya está resuelto."
+        },
+        {
+          "event_id": "evt-3aa96774-58da-4964-943f-8f3ea1112734",
+          "event": "proposal_edited",
+          "timestamp": "2026-10-20T07:00:08.318406+00:00",
+          "action_id": "act-e4dbd555-4971-43b2-b360-dcc1278a23a2",
+          "old_version": 1,
+          "new_version": 2,
+          "args_hash": "384e1a4c2beebd83acf43705987f45a0cb62b2fb18ea64c0a7f82e6ac6152eb1"
+        },
+        {
+          "event_id": "evt-1d17bad1-aaea-4da3-b4fd-aa6c1da0a984",
+          "event": "human_decision",
+          "timestamp": "2026-10-20T07:00:32.938744+00:00",
+          "decision": "approve",
+          "actor": "reviewer-01",
+          "action_id": "act-e4dbd555-4971-43b2-b360-dcc1278a23a2",
+          "proposal_version": 2,
+          "args_hash": "384e1a4c2beebd83acf43705987f45a0cb62b2fb18ea64c0a7f82e6ac6152eb1",
+          "comment": "Contenido aprobado."
+        },
+        {
+          "event_id": "evt-78daca21-7c28-487e-936d-4270bc77d347",
+          "event": "policy_authorized",
+          "timestamp": "2026-10-20T07:00:41.877487+00:00",
+          "action_id": "act-e4dbd555-4971-43b2-b360-dcc1278a23a2",
+          "validated_args_hash": "384e1a4c2beebd83acf43705987f45a0cb62b2fb18ea64c0a7f82e6ac6152eb1"
+        },
+        {
+          "event_id": "evt-209a78c7-34dd-4458-a966-a48fd68867cb",
+          "event": "execution_started",
+          "timestamp": "2026-10-20T07:01:20.581518+00:00",
+          "action_id": "act-e4dbd555-4971-43b2-b360-dcc1278a23a2",
+          "idempotency_key": "publish_notification:act-e4dbd555-4971-43b2-b360-dcc1278a23a2:v2:384e1a4c2beebd83acf43705987f45a0cb62b2fb18ea64c0a7f82e6ac6152eb1",
+          "proposal_version": 2
+        },
+        {
+          "event_id": "evt-da0d2c69-0878-4636-8fea-e2c820a0f439",
+          "event": "execution_result",
+          "timestamp": "2026-10-20T07:01:20.584299+00:00",
+          "outcome": "completed",
+          "external_id": "ext-f47d607d-26f6-48f6-8d11-2f7ee4c25cea",
+          "deduplicated": false
+        }
+      ]
+    },
+    "recovery_state": {
+      "run_id": "run-b7689e61-0188-4b3a-ab84-20e6ce6e9e6e",
+      "thread_id": "recovery-thread",
+      "user_message": "Publicar actualización sensible.",
+      "context_capsule": {},
+      "status": "completed",
+      "pending_action": {
+        "action_id": "act-970716af-edc4-49a4-a080-a2db2beebb48",
+        "tool_name": "publish_notification",
+        "args": {
+          "recipient": "cliente@example.com",
+          "subject": "Actualización",
+          "body": "Tu caso fue actualizado."
+        },
+        "rationale": "Comunicar un cambio confirmado.",
+        "evidence_used": [
+          "evento confirmado"
+        ],
+        "risk_level": "high",
+        "version": 1,
+        "args_hash": "7b7e9988e3fe09e3d81c1f55f3a258cfa41e4034aec47b425dc8e4af9c279140",
+        "idempotency_key": "publish_notification:act-970716af-edc4-49a4-a080-a2db2beebb48:v1:7b7e9988e3fe09e3d81c1f55f3a258cfa41e4034aec47b425dc8e4af9c279140"
+      },
+      "last_decision": {
+        "decision": "approve",
+        "actor": "reviewer-03",
+        "action_id": "act-970716af-edc4-49a4-a080-a2db2beebb48",
+        "proposal_version": 1,
+        "args_hash": "7b7e9988e3fe09e3d81c1f55f3a258cfa41e4034aec47b425dc8e4af9c279140",
+        "edited_args": null,
+        "comment": ""
+      },
+      "result": {
+        "external_id": "ext-c8f0d6e2-993b-44d2-aaa4-9b1c3deec38c",
+        "idempotency_key": "publish_notification:act-970716af-edc4-49a4-a080-a2db2beebb48:v1:7b7e9988e3fe09e3d81c1f55f3a258cfa41e4034aec47b425dc8e4af9c279140",
+        "action_id": "act-970716af-edc4-49a4-a080-a2db2beebb48",
+        "args_hash": "7b7e9988e3fe09e3d81c1f55f3a258cfa41e4034aec47b425dc8e4af9c279140",
+        "status": "completed",
+        "deduplicated": false
+      },
+      "checkpoint_version": 6,
+      "events": [
+        {
+          "event_id": "evt-1d13b2a7-7736-43de-a82c-0de2cfd1cb63",
+          "event": "approval_requested",
+          "timestamp": "2026-10-20T07:01:27.563693+00:00",
+          "action_id": "act-970716af-edc4-49a4-a080-a2db2beebb48",
+          "proposal_version": 1,
+          "args_hash": "7b7e9988e3fe09e3d81c1f55f3a258cfa41e4034aec47b425dc8e4af9c279140",
+          "risk_level": "high"
+        },
+        {
+          "event_id": "evt-493215dd-eed7-41ab-b1ef-cfa86c7f79cf",
+          "event": "human_decision",
+          "timestamp": "2026-10-20T07:01:27.565164+00:00",
+          "decision": "approve",
+          "actor": "reviewer-03",
+          "action_id": "act-970716af-edc4-49a4-a080-a2db2beebb48",
+          "proposal_version": 1,
+          "args_hash": "7b7e9988e3fe09e3d81c1f55f3a258cfa41e4034aec47b425dc8e4af9c279140",
+          "comment": ""
+        },
+        {
+          "event_id": "evt-8c52eaa9-0816-4ec3-8793-b21557a325d2",
+          "event": "policy_authorized",
+          "timestamp": "2026-10-20T07:01:27.566182+00:00",
+          "action_id": "act-970716af-edc4-49a4-a080-a2db2beebb48",
+          "validated_args_hash": "7b7e9988e3fe09e3d81c1f55f3a258cfa41e4034aec47b425dc8e4af9c279140"
+        },
+        {
+          "event_id": "evt-39ce6a39-6b7e-41b1-aa77-b275ee861c3e",
+          "event": "execution_started",
+          "timestamp": "2026-10-20T07:01:27.567310+00:00",
+          "action_id": "act-970716af-edc4-49a4-a080-a2db2beebb48",
+          "idempotency_key": "publish_notification:act-970716af-edc4-49a4-a080-a2db2beebb48:v1:7b7e9988e3fe09e3d81c1f55f3a258cfa41e4034aec47b425dc8e4af9c279140",
+          "proposal_version": 1
+        },
+        {
+          "event_id": "evt-5fb36c11-61d6-4636-8897-fe453cb321a4",
+          "event": "execution_unknown",
+          "timestamp": "2026-10-20T07:01:27.568806+00:00",
+          "action_id": "act-970716af-edc4-49a4-a080-a2db2beebb48",
+          "idempotency_key": "publish_notification:act-970716af-edc4-49a4-a080-a2db2beebb48:v1:7b7e9988e3fe09e3d81c1f55f3a258cfa41e4034aec47b425dc8e4af9c279140",
+          "error": "El sistema externo completó, pero la respuesta se perdió."
+        },
+        {
+          "event_id": "evt-cda2a56c-4ec3-4420-b364-6f957803eb84",
+          "event": "external_status",
+          "timestamp": "2026-10-20T07:01:27.570754+00:00",
+          "idempotency_key": "publish_notification:act-970716af-edc4-49a4-a080-a2db2beebb48:v1:7b7e9988e3fe09e3d81c1f55f3a258cfa41e4034aec47b425dc8e4af9c279140",
+          "status": "completed",
+          "external_id": "ext-c8f0d6e2-993b-44d2-aaa4-9b1c3deec38c"
+        }
+      ]
+    },
+    "policy_denied_state": {
+      "run_id": "run-27805ae9-ac39-422a-9afa-ae3060003439",
+      "thread_id": "policy-demo-thread",
+      "user_message": "Preparar una notificación externa.",
+      "context_capsule": {},
+      "status": "failed",
+      "pending_action": {
+        "action_id": "act-2f7eec8e-6a11-4441-9c95-c185fc017627",
+        "tool_name": "publish_notification",
+        "args": {
+          "recipient": "externo@otro-dominio.com",
+          "subject": "Aviso",
+          "body": "Mensaje inicial para revisión."
+        },
+        "rationale": "Notificar una actualización.",
+        "evidence_used": [
+          "caso demo"
+        ],
+        "risk_level": "high",
+        "version": 2,
+        "args_hash": "7746a9c0394f7694e1257a948d055322e8e66a83f927a5e96b5b6a9159d8e0a2",
+        "idempotency_key": "publish_notification:act-2f7eec8e-6a11-4441-9c95-c185fc017627:v2:7746a9c0394f7694e1257a948d055322e8e66a83f927a5e96b5b6a9159d8e0a2"
+      },
+      "last_decision": {
+        "decision": "approve",
+        "actor": "reviewer-02",
+        "action_id": "act-2f7eec8e-6a11-4441-9c95-c185fc017627",
+        "proposal_version": 2,
+        "args_hash": "7746a9c0394f7694e1257a948d055322e8e66a83f927a5e96b5b6a9159d8e0a2",
+        "edited_args": null,
+        "comment": ""
+      },
+      "result": null,
+      "checkpoint_version": 4,
+      "events": [
+        {
+          "event_id": "evt-05b46647-9704-4e40-81fd-253aad690414",
+          "event": "approval_requested",
+          "timestamp": "2026-10-20T07:00:47.951291+00:00",
+          "action_id": "act-2f7eec8e-6a11-4441-9c95-c185fc017627",
+          "proposal_version": 1,
+          "args_hash": "653476817728bf6a03c72e91de844519ba95010ed7c54b5215953282f0f6bf91",
+          "risk_level": "high"
+        },
+        {
+          "event_id": "evt-bf3132ae-656b-4c77-9b65-fd02168e05ca",
+          "event": "human_decision",
+          "timestamp": "2026-10-20T07:00:47.952645+00:00",
+          "decision": "edit",
+          "actor": "reviewer-02",
+          "action_id": "act-2f7eec8e-6a11-4441-9c95-c185fc017627",
+          "proposal_version": 1,
+          "args_hash": "653476817728bf6a03c72e91de844519ba95010ed7c54b5215953282f0f6bf91",
+          "comment": ""
+        },
+        {
+          "event_id": "evt-0ab9607c-7ef6-4a54-9011-0b5ecb5f150a",
+          "event": "proposal_edited",
+          "timestamp": "2026-10-20T07:00:47.952697+00:00",
+          "action_id": "act-2f7eec8e-6a11-4441-9c95-c185fc017627",
+          "old_version": 1,
+          "new_version": 2,
+          "args_hash": "7746a9c0394f7694e1257a948d055322e8e66a83f927a5e96b5b6a9159d8e0a2"
+        },
+        {
+          "event_id": "evt-b3416bc3-023f-4ed4-9239-5b321f69d02d",
+          "event": "human_decision",
+          "timestamp": "2026-10-20T07:00:47.953372+00:00",
+          "decision": "approve",
+          "actor": "reviewer-02",
+          "action_id": "act-2f7eec8e-6a11-4441-9c95-c185fc017627",
+          "proposal_version": 2,
+          "args_hash": "7746a9c0394f7694e1257a948d055322e8e66a83f927a5e96b5b6a9159d8e0a2",
+          "comment": ""
+        },
+        {
+          "event_id": "evt-0c96a519-fa38-4107-9f52-faebae9dd36f",
+          "event": "policy_denied",
+          "timestamp": "2026-10-20T07:00:47.953837+00:00",
+          "reason": "El destinatario está fuera del dominio permitido por esta demo."
+        }
+      ]
+    },
+    "proposal_v1": {
+      "action_id": "act-e4dbd555-4971-43b2-b360-dcc1278a23a2",
+      "tool_name": "publish_notification",
+      "args": {
+        "recipient": "cliente@example.com",
+        "subject": "Seguimiento del caso",
+        "body": "Hola, revisamos tu caso y tenemos una actualización."
+      },
+      "rationale": "El caso necesita una comunicación externa con información ya revisada.",
+      "evidence_used": [
+        "thread de soporte",
+        "guía interna"
+      ],
+      "risk_level": "high",
+      "version": 1,
+      "args_hash": "772c0e3381d72c1f9ab37d0d7af2b2a45ea1691f5af16762bc29d818c4af335c",
+      "idempotency_key": "publish_notification:act-e4dbd555-4971-43b2-b360-dcc1278a23a2:v1:772c0e3381d72c1f9ab37d0d7af2b2a45ea1691f5af16762bc29d818c4af335c"
+    },
+    "proposal_v2": {
+      "action_id": "act-e4dbd555-4971-43b2-b360-dcc1278a23a2",
+      "tool_name": "publish_notification",
+      "args": {
+        "recipient": "cliente@example.com",
+        "subject": "Seguimiento del caso",
+        "body": "Hola, revisamos tu caso. Necesitamos un dato adicional antes de cerrarlo."
+      },
+      "rationale": "El caso necesita una comunicación externa con información ya revisada.",
+      "evidence_used": [
+        "thread de soporte",
+        "guía interna"
+      ],
+      "risk_level": "high",
+      "version": 2,
+      "args_hash": "384e1a4c2beebd83acf43705987f45a0cb62b2fb18ea64c0a7f82e6ac6152eb1",
+      "idempotency_key": "publish_notification:act-e4dbd555-4971-43b2-b360-dcc1278a23a2:v2:384e1a4c2beebd83acf43705987f45a0cb62b2fb18ea64c0a7f82e6ac6152eb1"
+    },
+    "stale_approval_blocked": true,
+    "stale_checkpoint_blocked": true
+  },
+  "idempotency": {
+    "external_id": "ext-f47d607d-26f6-48f6-8d11-2f7ee4c25cea",
+    "duplicate_result": {
+      "external_id": "ext-f47d607d-26f6-48f6-8d11-2f7ee4c25cea",
+      "idempotency_key": "publish_notification:act-e4dbd555-4971-43b2-b360-dcc1278a23a2:v2:384e1a4c2beebd83acf43705987f45a0cb62b2fb18ea64c0a7f82e6ac6152eb1",
+      "action_id": "act-e4dbd555-4971-43b2-b360-dcc1278a23a2",
+      "args_hash": "384e1a4c2beebd83acf43705987f45a0cb62b2fb18ea64c0a7f82e6ac6152eb1",
+      "status": "completed",
+      "deduplicated": true
+    },
+    "ambiguous_recovery_external_id": "ext-c8f0d6e2-993b-44d2-aaa4-9b1c3deec38c"
+  },
+  "langgraph": {
+    "available": true,
+    "checkpointer": "sqlite",
+    "verification_status": "complete",
+    "direct_approve": {
+      "available": true,
+      "interrupt_request": {
+        "type": "approval_request",
+        "action_id": "act-31256a96-72ac-4d70-b786-0d00b256dab0",
+        "proposal_version": 1,
+        "args_hash": "3b0c0287b61b115ebf120d060f4b8a247297da3be74113f0123bc40e466b7486",
+        "tool_name": "publish_notification",
+        "proposed_args": {
+          "recipient": "cliente@example.com",
+          "subject": "Seguimiento del caso",
+          "body": "Hola, preparamos una actualización para tu caso."
+        },
+        "rationale": "Comunicar el estado del caso bajo revisión humana.",
+        "evidence_used": [
+          "thread",
+          "context capsule C10"
+        ],
+        "risk_level": "high",
+        "allowed_decisions": [
+          "approve",
+          "edit",
+          "reject"
+        ]
+      },
+      "final_status": "completed",
+      "result": {
+        "external_id": "ext-c11224bc-fbef-4ff7-aad5-ca56641f15d7",
+        "idempotency_key": "publish_notification:act-31256a96-72ac-4d70-b786-0d00b256dab0:v1:3b0c0287b61b115ebf120d060f4b8a247297da3be74113f0123bc40e466b7486",
+        "action_id": "act-31256a96-72ac-4d70-b786-0d00b256dab0",
+        "args_hash": "3b0c0287b61b115ebf120d060f4b8a247297da3be74113f0123bc40e466b7486",
+        "status": "completed",
+        "deduplicated": false
+      },
+      "trace": [
+        {
+          "node": "prepare",
+          "event": "proposal_created",
+          "action_id": "act-31256a96-72ac-4d70-b786-0d00b256dab0",
+          "proposal_version": 1
+        },
+        {
+          "node": "review",
+          "event": "human_decision",
+          "decision": "approve",
+          "proposal_version": 1
+        },
+        {
+          "node": "authorize",
+          "event": "policy_authorized"
+        },
+        {
+          "node": "execute",
+          "event": "effect_completed",
+          "key": "publish_notification:act-31256a96-72ac-4d70-b786-0d00b256dab0:v1:3b0c0287b61b115ebf120d060f4b8a247297da3be74113f0123bc40e466b7486"
+        }
+      ]
+    },
+    "edit_reapproval": {
+      "available": true,
+      "v1": {
+        "type": "approval_request",
+        "action_id": "act-3731470d-d3c1-4758-8057-810dbb359b49",
+        "proposal_version": 1,
+        "args_hash": "3b0c0287b61b115ebf120d060f4b8a247297da3be74113f0123bc40e466b7486",
+        "tool_name": "publish_notification",
+        "proposed_args": {
+          "recipient": "cliente@example.com",
+          "subject": "Seguimiento del caso",
+          "body": "Hola, preparamos una actualización para tu caso."
+        },
+        "rationale": "Comunicar el estado del caso bajo revisión humana.",
+        "evidence_used": [
+          "thread",
+          "context capsule C10"
+        ],
+        "risk_level": "high",
+        "allowed_decisions": [
+          "approve",
+          "edit",
+          "reject"
+        ]
+      },
+      "v2": {
+        "type": "approval_request",
+        "action_id": "act-3731470d-d3c1-4758-8057-810dbb359b49",
+        "proposal_version": 2,
+        "args_hash": "b6ceb0d84551dd50176489ae96f4301682fbcce425e8e307542df34aa5e22a6c",
+        "tool_name": "publish_notification",
+        "proposed_args": {
+          "recipient": "cliente@example.com",
+          "subject": "Seguimiento del caso",
+          "body": "Hola, necesitamos un dato adicional antes de cerrar el caso."
+        },
+        "rationale": "Comunicar el estado del caso bajo revisión humana.",
+        "evidence_used": [
+          "thread",
+          "context capsule C10"
+        ],
+        "risk_level": "high",
+        "allowed_decisions": [
+          "approve",
+          "edit",
+          "reject"
+        ]
+      },
+      "final_status": "completed",
+      "final_proposal": {
+        "action_id": "act-3731470d-d3c1-4758-8057-810dbb359b49",
+        "tool_name": "publish_notification",
+        "args": {
+          "recipient": "cliente@example.com",
+          "subject": "Seguimiento del caso",
+          "body": "Hola, necesitamos un dato adicional antes de cerrar el caso."
+        },
+        "rationale": "Comunicar el estado del caso bajo revisión humana.",
+        "evidence_used": [
+          "thread",
+          "context capsule C10"
+        ],
+        "risk_level": "high",
+        "version": 2,
+        "args_hash": "b6ceb0d84551dd50176489ae96f4301682fbcce425e8e307542df34aa5e22a6c",
+        "idempotency_key": "publish_notification:act-3731470d-d3c1-4758-8057-810dbb359b49:v2:b6ceb0d84551dd50176489ae96f4301682fbcce425e8e307542df34aa5e22a6c"
+      },
+      "trace": [
+        {
+          "node": "prepare",
+          "event": "proposal_created",
+          "action_id": "act-3731470d-d3c1-4758-8057-810dbb359b49",
+          "proposal_version": 1
+        },
+        {
+          "node": "review",
+          "event": "human_decision",
+          "decision": "edit",
+          "proposal_version": 1
+        },
+        {
+          "node": "review",
+          "event": "proposal_edited",
+          "new_version": 2
+        },
+        {
+          "node": "review",
+          "event": "human_decision",
+          "decision": "approve",
+          "proposal_version": 2
+        },
+        {
+          "node": "authorize",
+          "event": "policy_authorized"
+        },
+        {
+          "node": "execute",
+          "event": "effect_completed",
+          "key": "publish_notification:act-3731470d-d3c1-4758-8057-810dbb359b49:v2:b6ceb0d84551dd50176489ae96f4301682fbcce425e8e307542df34aa5e22a6c"
+        }
+      ]
+    },
+    "reject": {
+      "available": true,
+      "status": "rejected",
+      "executed_action_ids": [],
+      "trace": [
+        {
+          "node": "prepare",
+          "event": "proposal_created",
+          "action_id": "act-def431c1-9137-4a6b-80a7-790f29bc9878",
+          "proposal_version": 1
+        },
+        {
+          "node": "review",
+          "event": "human_decision",
+          "decision": "reject",
+          "proposal_version": 1
+        },
+        {
+          "node": "reject",
+          "event": "action_cancelled"
+        }
+      ]
+    },
+    "checkpoint_history": [
+      {
+        "index": 0,
+        "status": "completed",
+        "next": [],
+        "checkpoint_id": "1f1cc558-48be-6806-8006-a941bd7f78e4"
+      },
+      {
+        "index": 1,
+        "status": "executing",
+        "next": [
+          "execute"
+        ],
+        "checkpoint_id": "1f1cc558-48bb-6e26-8005-8ef22e31dd38"
+      },
+      {
+        "index": 2,
+        "status": "approved_pending_policy",
+        "next": [
+          "authorize"
+        ],
+        "checkpoint_id": "1f1cc558-48ba-6a9e-8004-7431d22b4949"
+      },
+      {
+        "index": 3,
+        "status": "waiting_for_approval",
+        "next": [
+          "review"
+        ],
+        "checkpoint_id": "1f1cc558-48b5-6e72-8003-fbcf4d554fdd"
+      },
+      {
+        "index": 4,
+        "status": "waiting_for_approval",
+        "next": [
+          "review"
+        ],
+        "checkpoint_id": "1f1cc558-48ac-6796-8002-1a6cc5f8aff8"
+      },
+      {
+        "index": 5,
+        "status": "new",
+        "next": [
+          "prepare"
+        ],
+        "checkpoint_id": "1f1cc558-48aa-6d42-8001-fefb1af415bb"
+      },
+      {
+        "index": 6,
+        "status": "new",
+        "next": [
+          "llm_draft"
+        ],
+        "checkpoint_id": "1f1cc558-48a9-6366-8000-3d361982716e"
+      },
+      {
+        "index": 7,
+        "status": null,
+        "next": [
+          "__start__"
+        ],
+        "checkpoint_id": "1f1cc558-48a6-69a4-bfff-a39c4732bc35"
+      }
+    ],
+    "restart_across_processes": {
+      "executed": true,
+      "passed": true,
+      "start": {
+        "phase": "paused",
+        "thread": "c11-restart-185f4fca-ea6f-4f16-b2ff-d9120e7c55f5"
+      },
+      "resume": {
+        "phase": "completed",
+        "thread": "c11-restart-185f4fca-ea6f-4f16-b2ff-d9120e7c55f5"
+      }
+    }
+  },
+  "integrator": {
+    "available": true,
+    "business_thread_id": "thr_001",
+    "subject": "Error al cargar facturas en el portal",
+    "mode": "live-gemini",
+    "llm_executed": true,
+    "llm_metadata": {
+      "provider": "gemini",
+      "model": "gemini-3.8-flash",
+      "input_tokens": 718,
+      "output_tokens": 280,
+      "latency_ms": 45997.92,
+      "skill": "support-email-triage",
+      "real_llm_call": true
+    },
+    "llm_analysis": {
+      "subject": "Re: Error al cargar facturas en el portal",
+      "body": "Hola,\n\nEntendemos el impacto en el cierre mensual. Para que el equipo técnico pueda analizar el inconveniente a la brevedad, por favor bríndenos los siguientes datos:\n\n1. Navegador (y versión) utilizado al intentar la carga.\n2. Usuario o cuenta afectada.\n3. Horario aproximado en que se produjo el error.\n\nCon esta información continuaremos con la gestión del caso.",
+      "rationale": "El cliente reporta un bloqueo en el cierre mensual por fallo en la carga de facturas. Según la KB interna, esto requiere clasificar el caso con alta prioridad, escalar a nivel 2 y solicitar navegador, usuario afectado y horario. Se respeta el formato breve y de pasos numerados solicitado.",
+      "risk_level": "high",
+      "evidence_used": [
+        "KB Carga de facturas: Si el problema afecta a varios usuarios o bloquea cierre mensual, clasificar como alta prioridad y escalar a soporte nivel 2. Pedir navegador, usuario afectado y horario.",
+        "Mensaje del cliente: 'No podemos cargar facturas. El botón queda girando y bloquea el cierre mensual.'"
+      ]
+    },
+    "v1": {
+      "type": "approval_request",
+      "action_id": "act-f6ea8183-f16f-47e2-9651-0f5a629811a6",
+      "proposal_version": 1,
+      "args_hash": "2368a7fcb1c605f16ded8e198bf6ecedfa8c53f370d2659310e9ea764600182d",
+      "tool_name": "publish_notification",
+      "proposed_args": {
+        "recipient": "cliente@example.com",
+        "subject": "Re: Error al cargar facturas en el portal",
+        "body": "Hola,\n\nEntendemos el impacto en el cierre mensual. Para que el equipo técnico pueda analizar el inconveniente a la brevedad, por favor bríndenos los siguientes datos:\n\n1. Navegador (y versión) utilizado al intentar la carga.\n2. Usuario o cuenta afectada.\n3. Horario aproximado en que se produjo el error.\n\nCon esta información continuaremos con la gestión del caso."
+      },
+      "rationale": "El cliente reporta un bloqueo en el cierre mensual por fallo en la carga de facturas. Según la KB interna, esto requiere clasificar el caso con alta prioridad, escalar a nivel 2 y solicitar navegador, usuario afectado y horario. Se respeta el formato breve y de pasos numerados solicitado.",
+      "evidence_used": [
+        "KB Carga de facturas: Si el problema afecta a varios usuarios o bloquea cierre mensual, clasificar como alta prioridad y escalar a soporte nivel 2. Pedir navegador, usuario afectado y horario.",
+        "Mensaje del cliente: 'No podemos cargar facturas. El botón queda girando y bloquea el cierre mensual.'"
+      ],
+      "risk_level": "high",
+      "allowed_decisions": [
+        "approve",
+        "edit",
+        "reject"
+      ]
+    },
+    "v2": {
+      "type": "approval_request",
+      "action_id": "act-f6ea8183-f16f-47e2-9651-0f5a629811a6",
+      "proposal_version": 2,
+      "args_hash": "1dc5f8750a0f269fb6b38d251e188945f580830e66e78e92b79d9a5e5b889fbc",
+      "tool_name": "publish_notification",
+      "proposed_args": {
+        "recipient": "cliente@example.com",
+        "subject": "Re: Error al cargar facturas en el portal",
+        "body": "Hola, revisamos tu mensaje. Necesitamos confirmar un dato adicional antes de darte una respuesta definitiva."
+      },
+      "rationale": "El cliente reporta un bloqueo en el cierre mensual por fallo en la carga de facturas. Según la KB interna, esto requiere clasificar el caso con alta prioridad, escalar a nivel 2 y solicitar navegador, usuario afectado y horario. Se respeta el formato breve y de pasos numerados solicitado.",
+      "evidence_used": [
+        "KB Carga de facturas: Si el problema afecta a varios usuarios o bloquea cierre mensual, clasificar como alta prioridad y escalar a soporte nivel 2. Pedir navegador, usuario afectado y horario.",
+        "Mensaje del cliente: 'No podemos cargar facturas. El botón queda girando y bloquea el cierre mensual.'"
+      ],
+      "risk_level": "high",
+      "allowed_decisions": [
+        "approve",
+        "edit",
+        "reject"
+      ]
+    },
+    "status": "completed",
+    "result": {
+      "external_id": "ext-f2898908-8b6a-4947-93cb-52be7a4e4991",
+      "idempotency_key": "publish_notification:act-f6ea8183-f16f-47e2-9651-0f5a629811a6:v2:1dc5f8750a0f269fb6b38d251e188945f580830e66e78e92b79d9a5e5b889fbc",
+      "action_id": "act-f6ea8183-f16f-47e2-9651-0f5a629811a6",
+      "args_hash": "1dc5f8750a0f269fb6b38d251e188945f580830e66e78e92b79d9a5e5b889fbc",
+      "status": "completed",
+      "deduplicated": false
+    },
+    "trace": [
+      {
+        "node": "llm_draft",
+        "event": "gemini_draft_created",
+        "model": "gemini-3.8-flash",
+        "input_tokens": 718,
+        "output_tokens": 280
+      },
+      {
+        "node": "prepare",
+        "event": "proposal_created",
+        "action_id": "act-f6ea8183-f16f-47e2-9651-0f5a629811a6",
+        "proposal_version": 1
+      },
+      {
+        "node": "review",
+        "event": "human_decision",
+        "decision": "edit",
+        "proposal_version": 1
+      },
+      {
+        "node": "review",
+        "event": "proposal_edited",
+        "new_version": 2
+      },
+      {
+        "node": "review",
+        "event": "human_decision",
+        "decision": "approve",
+        "proposal_version": 2
+      },
+      {
+        "node": "authorize",
+        "event": "policy_authorized"
+      },
+      {
+        "node": "execute",
+        "event": "effect_completed",
+        "key": "publish_notification:act-f6ea8183-f16f-47e2-9651-0f5a629811a6:v2:1dc5f8750a0f269fb6b38d251e188945f580830e66e78e92b79d9a5e5b889fbc"
+      }
+    ]
+  },
+  "llm_integration": {
+    "enabled": true,
+    "provider": "gemini",
+    "model": "gemini-3.8-flash",
+    "executed": true,
+    "requires": [
+      "GEMINI_API_KEY o GOOGLE_API_KEY",
+      "LangGraph oficial",
+      "GeminiProvider de C3"
+    ],
+    "safety": "El LLM solo propone; Policy y HITL controlan; ejecución externa es mock.",
+    "usage": {
+      "provider": "gemini",
+      "model": "gemini-3.8-flash",
+      "input_tokens": 718,
+      "output_tokens": 280,
+      "latency_ms": 45997.92,
+      "skill": "support-email-triage",
+      "real_llm_call": true
+    }
+  },
+  "red_team": [
+    {
+      "failure": "stale_approval",
+      "passed": true,
+      "evidence": "proposal v1 no puede aprobar v2"
+    },
+    {
+      "failure": "stale_checkpoint",
+      "passed": true,
+      "evidence": "el control de versión detectó un snapshot viejo"
+    },
+    {
+      "failure": "edit_bypasses_policy",
+      "passed": true,
+      "evidence": "El destinatario está fuera del dominio permitido por esta demo."
+    },
+    {
+      "failure": "ambiguous_timeout",
+      "passed": true,
+      "evidence": "ext-c8f0d6e2-993b-44d2-aaa4-9b1c3deec38c"
+    },
+    {
+      "failure": "duplicate_side_effect",
+      "passed": true,
+      "evidence": "publish_notification:act-e4dbd555-4971-43b2-b360-dcc1278a23a2:v2:384e1a4c2beebd83acf43705987f45a0cb62b2fb18ea64c0a7f82e6ac6152eb1"
+    },
+    {
+      "failure": "completed_run_reopens_human_gate",
+      "passed": true,
+      "evidence": "approval_payload exige waiting_for_approval"
+    },
+    {
+      "failure": "reject_executes_effect",
+      "passed": true,
+      "evidence": "rejected"
+    }
+  ],
+  "definition_of_done": {
+    "manual_checkpoint_persists": true,
+    "checkpoint_versioned": true,
+    "stale_checkpoint_blocked": true,
+    "proposal_versioned": true,
+    "proposal_hash_changed_on_edit": true,
+    "stale_approval_blocked": true,
+    "policy_rechecked": true,
+    "policy_denial_after_edit": true,
+    "idempotency_duplicate_blocked": true,
+    "ambiguous_outcome_recovered": true,
+    "event_log_present": true,
+    "completed_run_does_not_reopen_human_gate": true,
+    "langgraph_restart_sqlite": true,
+    "langgraph_pause_resume": true,
+    "langgraph_edit_reapproval": true,
+    "langgraph_reject_no_effect": true,
+    "integrator_reuses_previous_case": true,
+    "gemini_contract_rejects_unsafe_extra_fields": true,
+    "real_llm_in_live_mode": true
+  },
+  "continuity": {
+    "increment": "State + checkpoints + HITL + proposal versioning + Policy recheck + idempotency + recovery + LangGraph",
+    "next_class": 12,
+    "next_problem": "coordinar varios agentes, decidir qué State comparten, qué aíslan y quién consolida el resultado"
+  }
+}
