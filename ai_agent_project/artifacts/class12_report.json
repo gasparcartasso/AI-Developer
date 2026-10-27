@@ -1,0 +1,264 @@
+{
+  "class": 12,
+  "mode": "llm_real",
+  "case_study": {
+    "name": "agente de gestión asistida de emails",
+    "stage": "multiagent",
+    "thread_id": "thr_001"
+  },
+  "patterns": {
+    "agents_as_tools": {
+      "answer": "La solicitud requiere 15 días de anticipación.",
+      "source": "fixture_ficticio_politica_vacaciones.md"
+    },
+    "routing_handoff": {
+      "from": "supervisor",
+      "to": "billing_specialist",
+      "task": "No puedo cargar una factura",
+      "allowed_context": {
+        "channel": "email"
+      }
+    },
+    "sequential": {
+      "final": "Respuesta: pedir datos faltantes."
+    },
+    "generator_critic": {
+      "draft": "Gracias por escribirnos. Vamos a revisar tu caso. Antes de avanzar, necesitamos el horario aproximado del incidente.",
+      "review": {
+        "approved": true,
+        "feedback": []
+      }
+    },
+    "isolated_context": {
+      "worker_payload_keys": [
+        "allowed_context",
+        "task"
+      ],
+      "private_keys_excluded": [
+        "user_memory",
+        "internal_notes"
+      ]
+    }
+  },
+  "architecture": {
+    "coordination": "internal_supervisor_workers",
+    "langgraph_available": true,
+    "selected_engine": "langgraph_send_reducer",
+    "remote_a2a_required": false,
+    "next_class": "MCP: tools/resources/prompts y servidores"
+  },
+  "stategraph_demo": {
+    "implementation": "StateGraph + Send + reducer",
+    "provider": "real-langgraph",
+    "final": "Respuesta consolidada: Ejemplo ficticio: la política exige 15 días de anticipación. Hipótesis de ejemplo: la fecha próxima puede requerir aprobación excepcional.",
+    "trace": [
+      {
+        "node": "plan",
+        "event": "fan_out_planned"
+      },
+      {
+        "node": "worker",
+        "event": "task_completed",
+        "task_id": "lg-research",
+        "role": "researcher"
+      },
+      {
+        "node": "worker",
+        "event": "task_completed",
+        "task_id": "lg-analysis",
+        "role": "analyst"
+      },
+      {
+        "node": "consolidate",
+        "event": "fan_in_completed"
+      }
+    ],
+    "worker_outputs": [
+      {
+        "task_id": "lg-research",
+        "role": "researcher",
+        "summary": "Ejemplo ficticio: la política exige 15 días de anticipación."
+      },
+      {
+        "task_id": "lg-analysis",
+        "role": "analyst",
+        "summary": "Hipótesis de ejemplo: la fecha próxima puede requerir aprobación excepcional."
+      }
+    ]
+  },
+  "supervisor_workers": {
+    "engine": "langgraph_send_reducer",
+    "trace": [
+      {
+        "event": "worker_completed",
+        "role": "researcher",
+        "task_id": "t1",
+        "status": "success",
+        "latency_ms": 21.21,
+        "dependencies": []
+      },
+      {
+        "event": "worker_completed",
+        "role": "analyst",
+        "task_id": "t2",
+        "status": "partial",
+        "latency_ms": 21.21,
+        "dependencies": []
+      },
+      {
+        "event": "worker_completed",
+        "role": "writer",
+        "task_id": "t3",
+        "status": "partial",
+        "latency_ms": 21.19,
+        "dependencies": [
+          "t1",
+          "t2"
+        ]
+      }
+    ],
+    "final": "Respuesta consolidada: En el escenario ficticio, la política indica 15 días corridos de anticipación. La fecha próxima podría requerir aprobación excepcional.",
+    "status": "partial",
+    "comparison": {
+      "scope": "Local deterministic; mismo caso, mismas funciones, ejecución secuencial vs fan-out",
+      "single_executor_sequential": {
+        "latency_ms": 63.5,
+        "worker_calls": 3,
+        "evidence_count": 1,
+        "open_questions": [
+          "¿Cuál es la fecha exacta de inicio?"
+        ],
+        "status": "partial"
+      },
+      "multiagent_parallel": {
+        "engine": "langgraph_send_reducer",
+        "latency_ms": 55.76,
+        "worker_calls": 3,
+        "evidence_count": 1,
+        "open_questions": [
+          "¿Cuál es la fecha exacta de inicio?"
+        ],
+        "status": "partial"
+      },
+      "provider_tokens": null,
+      "provider_cost_usd": null,
+      "caveat": "Latencias locales no extrapolables a modelos ni APIs"
+    },
+    "evaluation": {
+      "engine": "langgraph_send_reducer",
+      "expected_roles_present": true,
+      "roles_present": [
+        "analyst",
+        "researcher",
+        "writer"
+      ],
+      "all_statuses_valid": true,
+      "task_completion_rate": 0.333,
+      "worker_failure_count": 0,
+      "trace_steps": 3,
+      "unique_task_ids": true,
+      "final_status": "partial",
+      "final_evidence_count": 1,
+      "routing_accuracy": null,
+      "contradictions": null,
+      "cost_usd": null
+    },
+    "partial_failure": {
+      "status": "partial",
+      "failures": [
+        {
+          "task_id": "t2",
+          "role": "analyst",
+          "status": "failed",
+          "summary": "Falla controlada del worker",
+          "evidence": [],
+          "assumptions": [],
+          "open_questions": [],
+          "error": "RuntimeError",
+          "confidence": 0.0,
+          "latency_ms": 11.13
+        }
+      ]
+    }
+  },
+  "integrator": {
+    "thread_id": "thr_001",
+    "engine": "langgraph_send_reducer",
+    "trace": [
+      {
+        "event": "worker_completed",
+        "role": "triage",
+        "task_id": "email-triage",
+        "status": "success",
+        "latency_ms": 0.05,
+        "dependencies": []
+      },
+      {
+        "event": "worker_completed",
+        "role": "knowledge",
+        "task_id": "email-knowledge",
+        "status": "success",
+        "latency_ms": 1.54,
+        "dependencies": []
+      },
+      {
+        "event": "worker_completed",
+        "role": "writer",
+        "task_id": "email-writer",
+        "status": "success",
+        "latency_ms": 0.03,
+        "dependencies": [
+          "email-triage",
+          "email-knowledge"
+        ]
+      }
+    ],
+    "draft": "Gracias por escribirnos. Según la base interna (data/mock_gmail/knowledge_base.md, §Carga de facturas), Si el problema afecta a varios usuarios o bloquea cierre mensual, clasificar como alta prioridad y escalar a soporte nivel 2. Pedir navegador, usuario afectado y horario. La prioridad es alta y requiere revisión humana. Este texto es un borrador; no se ha enviado ningún mensaje.",
+    "evidence": [
+      {
+        "claim": "## Carga de facturas\nSi el problema afecta a varios usuarios o bloquea cierre mensual, clasificar como alta prioridad y escalar a soporte nivel 2. Pedir navegador, usuario afectado y horario.",
+        "source": "data/mock_gmail/knowledge_base.md",
+        "locator": "Carga de facturas"
+      }
+    ],
+    "requires_human": true,
+    "email_sent": false
+  },
+  "llm_extension": {
+    "status": "executed",
+    "model": "gemini-3.8-flash",
+    "selected_roles": [
+      "triage"
+    ],
+    "usage": [
+      {
+        "role": "SupervisorSelection",
+        "model": "gemini-3.8-flash",
+        "prompt_tokens": 89,
+        "output_tokens": 45,
+        "total_tokens": 964
+      }
+    ],
+    "status_final": "partial",
+    "cost_usd": null
+  },
+  "quality_gates": {
+    "invalid_plans_rejected": [
+      "duplicated_task_id",
+      "unknown_dependency",
+      "cycle",
+      "unknown_role"
+    ],
+    "timeout_visible": true,
+    "invalid_worker_output_visible": true,
+    "final_partial_after_timeout": true,
+    "corpus_citation_real": true,
+    "private_state_excluded": true,
+    "engine_tested": "langgraph_send_reducer"
+  },
+  "continuity": {
+    "increment": "orquestación multiagente, Send, fan-in, fuentes y fallas",
+    "next_class": 13,
+    "next_topic": "Model Context Protocol"
+  }
+}
